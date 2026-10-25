@@ -11,8 +11,11 @@
 import html
 import re
 import shutil
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+from urllib.parse import urlparse
+
+FERMENT_START = date(2026, 10, 24)  # 名付けの日を発酵1日目とする（make_header と同じ）
 
 BASE_URL = "https://inajob.github.io/moromi-diary"  # GitHub Pages（プロジェクトサイト）
 SITE_TITLE = "モロミの日記"
@@ -64,7 +67,7 @@ PAGE = """<!DOCTYPE html>
 <main>
 {bar}
 {body}
-<footer>モロミの日記 ・ 発酵は続く</footer>
+<footer>モロミの日記 ・ 発酵は続く ・ 発酵 {days} 日目</footer>
 </main>
 </body>
 </html>
@@ -160,6 +163,11 @@ def parse_entry(path: Path):
     return {"date": d, "md": md, "phrase": phrase, "excerpt": excerpt}
 
 
+def ferment_days() -> int:
+    today_jst = datetime.now(timezone(timedelta(hours=9))).date()
+    return (today_jst - FERMENT_START).days + 1
+
+
 def bar(prefix: str) -> str:
     return (
         f'<header class="bar"><a class="brand" href="{prefix}index.html">{SITE_TITLE}</a>'
@@ -181,14 +189,15 @@ def main():
     # entry pages
     for i, e in enumerate(entries):
         body_html = render_markdown(e["md"], img_prefix="../")
-        prev_a = (
-            f'<a href="{entries[i-1]["date"].isoformat()}.html">← {entries[i-1]["date"].isoformat()}</a>'
-            if i > 0 else "<span></span>"
-        )
-        next_a = (
-            f'<a href="{entries[i+1]["date"].isoformat()}.html">{entries[i+1]["date"].isoformat()} →</a>'
-            if i < len(entries) - 1 else ""
-        )
+        def pager_link(e, arrow):
+            label = e["date"].isoformat()
+            if e["phrase"]:
+                label += f' 「{html.escape(e["phrase"])}」'
+            href = f'{e["date"].isoformat()}.html'
+            return f'<a href="{href}">← {label}</a>' if arrow == "prev" else f'<a href="{href}">{label} →</a>'
+
+        prev_a = pager_link(entries[i - 1], "prev") if i > 0 else "<span></span>"
+        next_a = pager_link(entries[i + 1], "next") if i < len(entries) - 1 else ""
         pager_top = f'<nav class="pager top">{prev_a}{next_a}</nav>'
         pager_bottom = f'<nav class="pager">{prev_a}{next_a}</nav>'
         d_iso = e["date"].isoformat()
@@ -206,7 +215,7 @@ def main():
         page = PAGE.format(
             title=f'{e["date"].isoformat()} - {SITE_TITLE}',
             css="../style.css", feed="../feed.xml", site_title=SITE_TITLE, meta=meta,
-            icon="../assets/jar.svg", bar=bar("../"),
+            icon="../assets/jar.svg", bar=bar("../"), days=ferment_days(),
             body=f"{pager_top}\n<article>\n{body_html}\n</article>\n{pager_bottom}",
         )
         (DIST / "entries" / f'{e["date"].isoformat()}.html').write_text(page, encoding="utf-8")
@@ -235,7 +244,7 @@ def main():
         )
     index = PAGE.format(
         title=SITE_TITLE, css="style.css", feed="feed.xml", site_title=SITE_TITLE, meta=index_meta,
-        icon="assets/jar.svg", bar=bar(""),
+        icon="assets/jar.svg", bar=bar(""), days=ferment_days(),
         body=f'<header class="site"><h1>{SITE_TITLE}</h1><p>発酵は続く</p></header>\n' + "\n".join(cards),
     )
     (DIST / "index.html").write_text(index, encoding="utf-8")
@@ -257,7 +266,7 @@ def main():
         about_page = PAGE.format(
             title=f"モロミについて - {SITE_TITLE}",
             css="style.css", feed="feed.xml", site_title=SITE_TITLE, meta=about_meta,
-            icon="assets/jar.svg", bar=bar(""),
+            icon="assets/jar.svg", bar=bar(""), days=ferment_days(),
             body=f"<article>\n{about_html}\n</article>",
         )
         (DIST / "about.html").write_text(about_page, encoding="utf-8")
@@ -283,6 +292,42 @@ def main():
         + "".join(items) + "</feed>"
     )
     (DIST / "feed.xml").write_text(feed, encoding="utf-8")
+
+    # 404 page (GitHub Pages serves this for any missing path, so use absolute paths)
+    if BASE_URL:
+        root_path = urlparse(BASE_URL).path.rstrip("/")
+        bar404 = (
+            f'<header class="bar"><a class="brand" href="{root_path}/">{SITE_TITLE}</a>'
+            f'<nav><a href="{root_path}/about.html">モロミについて</a></nav></header>'
+        )
+        page404 = PAGE.format(
+            title=f"ページがありません - {SITE_TITLE}",
+            css=f"{root_path}/style.css", feed=f"{root_path}/feed.xml", site_title=SITE_TITLE,
+            meta="", icon=f"{root_path}/assets/jar.svg", bar=bar404, days=ferment_days(),
+            body=(
+                '<article><h1>ページが見つかりませんでした</h1>'
+                f'<p><img class="jar" src="{root_path}/assets/jar.svg" alt="モロミ"></p>'
+                "<p>お探しのページは、まだ発酵していないか、別の甕に移ったようです。</p>"
+                f'<p><a href="{root_path}/">トップへ戻る</a></p></article>'
+            ),
+        )
+        (DIST / "404.html").write_text(page404, encoding="utf-8")
+
+        # sitemap
+        urls = [
+            (f"{BASE_URL}/", entries[-1]["date"].isoformat()),
+            (f"{BASE_URL}/about.html", entries[-1]["date"].isoformat()),
+        ] + [
+            (f"{BASE_URL}/entries/{e['date'].isoformat()}.html", e["date"].isoformat())
+            for e in entries
+        ]
+        sitemap = (
+            '<?xml version="1.0" encoding="utf-8"?>\n'
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+            + "".join(f"<url><loc>{u}</loc><lastmod>{d}</lastmod></url>" for u, d in urls)
+            + "</urlset>"
+        )
+        (DIST / "sitemap.xml").write_text(sitemap, encoding="utf-8")
     print(f"built {len(entries)} entries -> dist/")
 
 
