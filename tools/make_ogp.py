@@ -111,6 +111,7 @@ def main():
     if arg == "default":
         render_default(assets / "ogp-default.png")
     elif arg == "all":
+        render_default(assets / "ogp-default.png")
         for md in sorted(root.glob("????-??-??.md")):
             m = re.search(r"<!--\s*phrase:\s*(.*?)\s*-->", md.read_text(encoding="utf-8"))
             render(date.fromisoformat(md.stem), m.group(1) if m else "", assets / f"{md.stem}-ogp.png")
