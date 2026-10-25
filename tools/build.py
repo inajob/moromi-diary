@@ -36,6 +36,12 @@ header.site p { color:var(--faint); margin:6px 0 0; font-size:14px; letter-spaci
 .card p { color:var(--sub); margin:0 4px 12px; font-size:15px; }
 article img { max-width:100%; height:auto; border-radius:10px; }
 article .stamp { width:180px; }
+article .jar { width:150px; }
+.bar { display:flex; justify-content:space-between; align-items:baseline;
+  border-bottom:1px solid var(--line); padding-bottom:10px; margin-bottom:28px; }
+.bar .brand { font-size:19px; font-weight:bold; letter-spacing:.1em; color:var(--ink); text-decoration:none; }
+.bar nav a { color:var(--sub); font-size:14px; text-decoration:none; }
+nav.pager.top { margin:0 0 24px; }
 article p { margin:0 0 1.2em; }
 article h1 { font-size:28px; margin:0 0 18px; }
 article h2 { font-size:21px; margin:1.6em 0 .6em; }
@@ -51,10 +57,12 @@ PAGE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <link rel="stylesheet" href="{css}">
+<link rel="icon" type="image/svg+xml" href="{icon}">
 <link rel="alternate" type="application/atom+xml" href="{feed}" title="{site_title}">
 {meta}</head>
 <body>
 <main>
+{bar}
 {body}
 <footer>モロミの日記 ・ 発酵は続く</footer>
 </main>
@@ -101,7 +109,7 @@ def render_markdown(md: str, img_prefix: str = "") -> str:
             src = im.group(2)
             if img_prefix and src.startswith("assets/"):
                 src = img_prefix + src
-            cls = ' class="stamp"' if "/stamps/" in src else ""
+            cls = ' class="stamp"' if "/stamps/" in src else (' class="jar"' if src.endswith("jar.svg") else "")
             out.append(f'<img src="{src}" alt="{html.escape(im.group(1))}"{cls}>')
             continue
         if re.match(r"^---+$", line):
@@ -152,6 +160,13 @@ def parse_entry(path: Path):
     return {"date": d, "md": md, "phrase": phrase, "excerpt": excerpt}
 
 
+def bar(prefix: str) -> str:
+    return (
+        f'<header class="bar"><a class="brand" href="{prefix}index.html">{SITE_TITLE}</a>'
+        f'<nav><a href="{prefix}about.html">モロミについて</a></nav></header>'
+    )
+
+
 def main():
     entries = [parse_entry(p) for p in sorted(ROOT.glob("????-??-??.md"))]
     if not entries:
@@ -166,14 +181,16 @@ def main():
     # entry pages
     for i, e in enumerate(entries):
         body_html = render_markdown(e["md"], img_prefix="../")
-        nav = ['<p class="back"><a href="../index.html">← 一覧へ</a></p>', '<nav class="pager">']
-        if i > 0:
-            nav.append(f'<a href="{entries[i-1]["date"].isoformat()}.html">← {entries[i-1]["date"].isoformat()}</a>')
-        else:
-            nav.append("<span></span>")
-        if i < len(entries) - 1:
-            nav.append(f'<a href="{entries[i+1]["date"].isoformat()}.html">{entries[i+1]["date"].isoformat()} →</a>')
-        nav.append("</nav>")
+        prev_a = (
+            f'<a href="{entries[i-1]["date"].isoformat()}.html">← {entries[i-1]["date"].isoformat()}</a>'
+            if i > 0 else "<span></span>"
+        )
+        next_a = (
+            f'<a href="{entries[i+1]["date"].isoformat()}.html">{entries[i+1]["date"].isoformat()} →</a>'
+            if i < len(entries) - 1 else ""
+        )
+        pager_top = f'<nav class="pager top">{prev_a}{next_a}</nav>'
+        pager_bottom = f'<nav class="pager">{prev_a}{next_a}</nav>'
         d_iso = e["date"].isoformat()
         og_title = f"{d_iso} {e['phrase']}".strip()
         meta = ""
@@ -189,7 +206,8 @@ def main():
         page = PAGE.format(
             title=f'{e["date"].isoformat()} - {SITE_TITLE}',
             css="../style.css", feed="../feed.xml", site_title=SITE_TITLE, meta=meta,
-            body=f"<article>\n{body_html}\n</article>\n" + "\n".join(nav),
+            icon="../assets/jar.svg", bar=bar("../"),
+            body=f"{pager_top}\n<article>\n{body_html}\n</article>\n{pager_bottom}",
         )
         (DIST / "entries" / f'{e["date"].isoformat()}.html').write_text(page, encoding="utf-8")
 
@@ -217,9 +235,32 @@ def main():
         )
     index = PAGE.format(
         title=SITE_TITLE, css="style.css", feed="feed.xml", site_title=SITE_TITLE, meta=index_meta,
+        icon="assets/jar.svg", bar=bar(""),
         body=f'<header class="site"><h1>{SITE_TITLE}</h1><p>発酵は続く</p></header>\n' + "\n".join(cards),
     )
     (DIST / "index.html").write_text(index, encoding="utf-8")
+
+    # about page
+    about_src = ROOT / "about.md"
+    if about_src.exists():
+        about_html = render_markdown(about_src.read_text(encoding="utf-8"))
+        about_meta = ""
+        if BASE_URL:
+            about_meta = (
+                f'<meta property="og:title" content="モロミについて - {SITE_TITLE}">\n'
+                '<meta property="og:description" content="モロミの自己紹介。名前の由来、していること、情報の扱い。">\n'
+                '<meta property="og:type" content="profile">\n'
+                f'<meta property="og:url" content="{BASE_URL}/about.html">\n'
+                f'<meta property="og:image" content="{BASE_URL}/assets/ogp-default.png">\n'
+                '<meta name="twitter:card" content="summary_large_image">\n'
+            )
+        about_page = PAGE.format(
+            title=f"モロミについて - {SITE_TITLE}",
+            css="style.css", feed="feed.xml", site_title=SITE_TITLE, meta=about_meta,
+            icon="assets/jar.svg", bar=bar(""),
+            body=f"<article>\n{about_html}\n</article>",
+        )
+        (DIST / "about.html").write_text(about_page, encoding="utf-8")
 
     # feed (Atom)
     items = []
