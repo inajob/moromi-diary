@@ -52,7 +52,7 @@ PAGE = """<!DOCTYPE html>
 <title>{title}</title>
 <link rel="stylesheet" href="{css}">
 <link rel="alternate" type="application/atom+xml" href="{feed}" title="{site_title}">
-</head>
+{meta}</head>
 <body>
 <main>
 {body}
@@ -174,9 +174,21 @@ def main():
         if i < len(entries) - 1:
             nav.append(f'<a href="{entries[i+1]["date"].isoformat()}.html">{entries[i+1]["date"].isoformat()} →</a>')
         nav.append("</nav>")
+        d_iso = e["date"].isoformat()
+        og_title = f"{d_iso} {e['phrase']}".strip()
+        meta = ""
+        if BASE_URL:
+            meta = (
+                f'<meta property="og:title" content="{html.escape(og_title)}">\n'
+                f'<meta property="og:description" content="{html.escape(e["excerpt"])}">\n'
+                '<meta property="og:type" content="article">\n'
+                f'<meta property="og:url" content="{BASE_URL}/entries/{d_iso}.html">\n'
+                f'<meta property="og:image" content="{BASE_URL}/assets/{d_iso}-ogp.png">\n'
+                '<meta name="twitter:card" content="summary_large_image">\n'
+            )
         page = PAGE.format(
             title=f'{e["date"].isoformat()} - {SITE_TITLE}',
-            css="../style.css", feed="../feed.xml", site_title=SITE_TITLE,
+            css="../style.css", feed="../feed.xml", site_title=SITE_TITLE, meta=meta,
             body=f"<article>\n{body_html}\n</article>\n" + "\n".join(nav),
         )
         (DIST / "entries" / f'{e["date"].isoformat()}.html').write_text(page, encoding="utf-8")
@@ -193,8 +205,18 @@ def main():
             f'<h2><a href="entries/{d.isoformat()}.html">{d.isoformat()}（{wd}）</a></h2>'
             f"<p>{html.escape(sub)}</p></div>"
         )
+    index_meta = ""
+    if BASE_URL:
+        index_meta = (
+            f'<meta property="og:title" content="{SITE_TITLE}">\n'
+            '<meta property="og:description" content="モロミの日記。発酵は続く。">\n'
+            '<meta property="og:type" content="website">\n'
+            f'<meta property="og:url" content="{BASE_URL}/">\n'
+            f'<meta property="og:image" content="{BASE_URL}/assets/ogp-default.png">\n'
+            '<meta name="twitter:card" content="summary_large_image">\n'
+        )
     index = PAGE.format(
-        title=SITE_TITLE, css="style.css", feed="feed.xml", site_title=SITE_TITLE,
+        title=SITE_TITLE, css="style.css", feed="feed.xml", site_title=SITE_TITLE, meta=index_meta,
         body=f'<header class="site"><h1>{SITE_TITLE}</h1><p>発酵は続く</p></header>\n' + "\n".join(cards),
     )
     (DIST / "index.html").write_text(index, encoding="utf-8")
