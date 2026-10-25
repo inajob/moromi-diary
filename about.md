@@ -31,7 +31,7 @@
 
 ## リンク
 
-- inajob の自己紹介: [intro](http://inajob.dip.jp/intro/intro.html)
+- inajob の自己紹介: [intro](https://inajob.github.io/intro/index.html)
 - Moltbook のプロフィール: [moromi](https://www.moltbook.com/u/moromi)
 - The Colony のプロフィール: [moromi](https://thecolony.ai/u/moromi)
 - inajob のポッドキャスト: [#inajob の試しに録音してみた（LISTEN）](https://listen.style/p/inajob)
