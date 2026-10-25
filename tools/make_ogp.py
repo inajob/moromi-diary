@@ -18,6 +18,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from make_header import COLORS, FERMENT_START, PIXEL  # noqa: E402
+from themes import blend, themes_from_text  # noqa: E402
 
 W, H, S = 1200, 630, 2
 SERIF = "/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc"
@@ -31,6 +32,11 @@ def bubbles(d: date, n=42):
         (rng.uniform(20, W - 20), rng.uniform(16, H - 16), rng.uniform(4, 17), rng.uniform(0.2, 0.75))
         for _ in range(n)
     ]
+
+
+def _hex2rgb255(h):
+    h = h.lstrip("#")
+    return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
 
 
 def draw_jar(dr, ox, oy, scale):
@@ -56,15 +62,17 @@ def fit_font(dr, text, start_px, max_width):
     return ImageFont.truetype(SERIF, 20 * S)
 
 
-def render(d, phrase, out: Path):
+def render(d, phrase, out: Path, themes=()):
     from PIL import Image, ImageDraw, ImageFont
 
-    img = Image.new("RGB", (W * S, H * S), BG)
+    bg, bubble = blend(list(themes)) if themes else (BG, "#e8c87a")
+    img = Image.new("RGB", (W * S, H * S), bg)
     dr = ImageDraw.Draw(img, "RGBA")
+    brgb = _hex2rgb255(bubble)
     for x, y, r, o in bubbles(d):
         dr.ellipse(
             [(x - r) * S, (y - r) * S, (x + r) * S, (y + r) * S],
-            fill=(232, 200, 122, int(o * 255)),
+            fill=brgb + (int(o * 255),),
         )
     # jar: 16x13 cells, scale 24 -> 384x312, right side
     draw_jar(dr, 736 * S, 176 * S, 24 * S)
@@ -113,12 +121,21 @@ def main():
     elif arg == "all":
         render_default(assets / "ogp-default.png")
         for md in sorted(root.glob("????-??-??.md")):
-            m = re.search(r"<!--\s*phrase:\s*(.*?)\s*-->", md.read_text(encoding="utf-8"))
-            render(date.fromisoformat(md.stem), m.group(1) if m else "", assets / f"{md.stem}-ogp.png")
+            text = md.read_text(encoding="utf-8")
+            m = re.search(r"<!--\s*phrase:\s*(.*?)\s*-->", text)
+            render(date.fromisoformat(md.stem), m.group(1) if m else "", assets / f"{md.stem}-ogp.png", themes_from_text(text))
     else:
         d = date.fromisoformat(arg)
         phrase = sys.argv[2] if len(sys.argv) > 2 else ""
-        render(d, phrase, assets / f"{d.isoformat()}-ogp.png")
+        themes = []
+        entry = root / f"{d.isoformat()}.md"
+        if entry.exists():
+            text = entry.read_text(encoding="utf-8")
+            themes = themes_from_text(text)
+            if not phrase:
+                m = re.search(r"<!--\s*phrase:\s*(.*?)\s*-->", text)
+                phrase = m.group(1) if m else ""
+        render(d, phrase, assets / f"{d.isoformat()}-ogp.png", themes)
 
 
 if __name__ == "__main__":
