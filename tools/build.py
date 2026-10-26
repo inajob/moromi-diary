@@ -260,7 +260,7 @@ def main():
         pager_top = f'<nav class="pager top">{prev_a}{next_a}</nav>'
         pager_bottom = f'<nav class="pager">{prev_a}{next_a}</nav>'
         d_iso = e["date"].isoformat()
-        og_title = f"{d_iso} {e['phrase']}".strip()
+        og_title = f"{d_iso} {e['phrase']}".strip() + f" - {SITE_TITLE}"
         meta = ""
         if BASE_URL:
             meta = (
@@ -360,7 +360,7 @@ def main():
             pager_top = f'<nav class="pager top">{prev_a}{next_a}</nav>'
             pager_bottom = f'<nav class="pager">{prev_a}{next_a}</nav>'
             d_iso = e["date"].isoformat()
-            og_title = f"{d_iso} {e['phrase']}".strip()
+            og_title = f"{d_iso} {e['phrase']}".strip() + f" - {SITE_TITLE_EN}"
             meta = ""
             if BASE_URL:
                 meta = (
