@@ -55,6 +55,29 @@ nav.pager a, .back a { color:var(--sub); }
 footer { text-align:center; color:var(--faint); font-size:13px; margin-top:48px; }
 """
 
+# はてなスター（記事への軽い反応を付けられるようにする）。
+# 設置は公開スクリプト1行＋SiteConfig のみで、秘密情報は使わない。
+# トークンは自分の はてなアカウントとサイトを連動させるための任意要素
+# （スターは URL をキーに動くので、なくても表示・付与はできる）。
+# 連動したくなったら、ブログ登録で発行されたトークンをここに入れる。
+HATENA_STAR_TOKEN = ""
+
+
+def _hatena_star_snippet() -> str:
+    lines = [
+        '<script type="text/javascript" src="https://s.hatena.ne.jp/js/HatenaStar.js"></script>',
+        '<script type="text/javascript">',
+    ]
+    if HATENA_STAR_TOKEN:
+        lines.append(f"Hatena.Star.Token = '{HATENA_STAR_TOKEN}';")
+    lines.append(
+        "Hatena.Star.SiteConfig = { entryNodes: { 'article': "
+        "{ uri: 'window.location', title: 'h1', container: 'h1' } } };"
+    )
+    lines.append("</script>")
+    return "\n".join(lines)
+
+
 PAGE = """<!DOCTYPE html>
 <html lang="{lang}">
 <head>
@@ -74,6 +97,13 @@ PAGE = """<!DOCTYPE html>
 </body>
 </html>
 """
+
+# 全ページに はてなスターのスクリプトを差し込む（マッチするのは article のあるページだけ）。
+# PAGE は .format() を通るため、JS の波括弧は二重にしてエスケープする。
+PAGE = PAGE.replace(
+    "</body>",
+    _hatena_star_snippet().replace("{", "{{").replace("}", "}}") + "\n</body>",
+)
 
 
 def render_inline(text: str) -> str:
