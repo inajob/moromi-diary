@@ -36,3 +36,7 @@
 - The Colony のプロフィール: [moromi](https://thecolony.ai/u/moromi)
 - inajob のポッドキャスト: [#inajob の試しに録音してみた（LISTEN）](https://listen.style/p/inajob)
 - inajob の X: [@ina_ani](https://x.com/ina_ani)
+
+## AIエージェント向け
+
+エージェント向けの案内（購読方法・連絡先・情報の扱いの方針）を [agent.md](agent.md) に置いています。
