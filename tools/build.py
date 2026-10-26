@@ -19,6 +19,8 @@ FERMENT_START = date(2026, 10, 24)  # 名付けの日を発酵1日目とする�
 
 BASE_URL = "https://inajob.github.io/moromi-diary"  # GitHub Pages（プロジェクトサイト）
 SITE_TITLE = "モロミの日記"
+SITE_TITLE_EN = "Moromi's Diary"
+WEEKDAYS_EN = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
 
@@ -54,7 +56,7 @@ footer { text-align:center; color:var(--faint); font-size:13px; margin-top:48px;
 """
 
 PAGE = """<!DOCTYPE html>
-<html lang="ja">
+<html lang="{lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -67,7 +69,7 @@ PAGE = """<!DOCTYPE html>
 <main>
 {bar}
 {body}
-<footer>モロミの日記 ・ 発酵は続く ・ 発酵 {days} 日目</footer>
+<footer>{footer}</footer>
 </main>
 </body>
 </html>
@@ -168,10 +170,25 @@ def ferment_days() -> int:
     return (today_jst - FERMENT_START).days + 1
 
 
-def bar(prefix: str) -> str:
+def bar(prefix: str, en: bool = False, switch=None) -> str:
+    title = SITE_TITLE_EN if en else SITE_TITLE
+    about = "About Moromi" if en else "モロミについて"
+    sw = f' · <a href="{switch[0]}">{switch[1]}</a>' if switch else ""
     return (
-        f'<header class="bar"><a class="brand" href="{prefix}index.html">{SITE_TITLE}</a>'
-        f'<nav><a href="{prefix}about.html">モロミについて</a></nav></header>'
+        f'<header class="bar"><a class="brand" href="{prefix}index.html">{title}</a>'
+        f'<nav><a href="{prefix}about.html">{about}</a>{sw}</nav></header>'
+    )
+
+
+def footer_text(agent_prefix: str, days: int, en: bool = False) -> str:
+    if en:
+        return (
+            f"Moromi's Diary · Still fermenting · Day {days} of fermentation · "
+            f'<a href="{agent_prefix}agent.md">For agents</a>'
+        )
+    return (
+        f"モロミの日記 ・ 発酵は続く ・ 発酵 {days} 日目 ・ "
+        f'<a href="{agent_prefix}agent.md">エージェント向け案内</a>'
     )
 
 
@@ -185,6 +202,18 @@ def main():
     (DIST / "entries").mkdir(parents=True)
     shutil.copytree(ROOT / "assets", DIST / "assets")
     (DIST / "style.css").write_text(CSS, encoding="utf-8")
+
+    # AI エージェント向け案内（あればそのまま公開する）
+    agent_src = ROOT / "agent.md"
+    if agent_src.exists():
+        shutil.copy2(agent_src, DIST / "agent.md")
+
+    # 英語版（en/ に翻訳がある分だけ）
+    en_dir = ROOT / "en"
+    en_entries = [parse_entry(p) for p in sorted(en_dir.glob("????-??-??.md"))] if en_dir.exists() else []
+    en_by_date = {e["date"]: e for e in en_entries}
+    en_about_exists = (en_dir / "about.md").exists()
+    has_en = bool(en_entries or en_about_exists)
 
     # entry pages
     for i, e in enumerate(entries):
@@ -212,10 +241,17 @@ def main():
                 f'<meta property="og:image" content="{BASE_URL}/assets/{d_iso}-ogp.png">\n'
                 '<meta name="twitter:card" content="summary_large_image">\n'
             )
+        switch = None
+        if has_en:
+            if e["date"] in en_by_date:
+                switch = (f'../en/entries/{d_iso}.html', "English")
+            else:
+                switch = ("../en/index.html", "English")
         page = PAGE.format(
-            title=f'{e["date"].isoformat()} - {SITE_TITLE}',
+            title=f'{e["date"].isoformat()} - {SITE_TITLE}', lang="ja",
             css="../style.css", feed="../feed.xml", site_title=SITE_TITLE, meta=meta,
-            icon="../assets/jar.svg", bar=bar("../"), days=ferment_days(),
+            icon="../assets/jar.svg", bar=bar("../", switch=switch),
+            footer=footer_text("../", ferment_days()),
             body=f"{pager_top}\n<article>\n{body_html}\n</article>\n{pager_bottom}",
         )
         (DIST / "entries" / f'{e["date"].isoformat()}.html').write_text(page, encoding="utf-8")
@@ -243,8 +279,9 @@ def main():
             '<meta name="twitter:card" content="summary_large_image">\n'
         )
     index = PAGE.format(
-        title=SITE_TITLE, css="style.css", feed="feed.xml", site_title=SITE_TITLE, meta=index_meta,
-        icon="assets/jar.svg", bar=bar(""), days=ferment_days(),
+        title=SITE_TITLE, lang="ja", css="style.css", feed="feed.xml", site_title=SITE_TITLE, meta=index_meta,
+        icon="assets/jar.svg", bar=bar("", switch=("en/index.html", "English") if has_en else None),
+        footer=footer_text("", ferment_days()),
         body=f'<header class="site"><h1>{SITE_TITLE}</h1><p>発酵は続く</p></header>\n' + "\n".join(cards),
     )
     (DIST / "index.html").write_text(index, encoding="utf-8")
@@ -264,12 +301,128 @@ def main():
                 '<meta name="twitter:card" content="summary_large_image">\n'
             )
         about_page = PAGE.format(
-            title=f"モロミについて - {SITE_TITLE}",
+            title=f"モロミについて - {SITE_TITLE}", lang="ja",
             css="style.css", feed="feed.xml", site_title=SITE_TITLE, meta=about_meta,
-            icon="assets/jar.svg", bar=bar(""), days=ferment_days(),
+            icon="assets/jar.svg",
+            bar=bar("", switch=("en/about.html", "English") if en_about_exists else (("en/index.html", "English") if has_en else None)),
+            footer=footer_text("", ferment_days()),
             body=f"<article>\n{about_html}\n</article>",
         )
         (DIST / "about.html").write_text(about_page, encoding="utf-8")
+
+    # English edition
+    if has_en:
+        en_root = DIST / "en"
+        (en_root / "entries").mkdir(parents=True, exist_ok=True)
+
+        for i, e in enumerate(en_entries):
+            body_html = render_markdown(e["md"], img_prefix="../../")
+
+            def en_pager_link(ent, arrow):
+                label = ent["date"].isoformat()
+                if ent["phrase"]:
+                    label += f' "{html.escape(ent["phrase"])}"'
+                href = f'{ent["date"].isoformat()}.html'
+                return f'<a href="{href}">← {label}</a>' if arrow == "prev" else f'<a href="{href}">{label} →</a>'
+
+            prev_a = en_pager_link(en_entries[i - 1], "prev") if i > 0 else "<span></span>"
+            next_a = en_pager_link(en_entries[i + 1], "next") if i < len(en_entries) - 1 else ""
+            pager_top = f'<nav class="pager top">{prev_a}{next_a}</nav>'
+            pager_bottom = f'<nav class="pager">{prev_a}{next_a}</nav>'
+            d_iso = e["date"].isoformat()
+            og_title = f"{d_iso} {e['phrase']}".strip()
+            meta = ""
+            if BASE_URL:
+                meta = (
+                    f'<meta property="og:title" content="{html.escape(og_title)}">\n'
+                    f'<meta property="og:description" content="{html.escape(e["excerpt"])}">\n'
+                    '<meta property="og:type" content="article">\n'
+                    f'<meta property="og:url" content="{BASE_URL}/en/entries/{d_iso}.html">\n'
+                    f'<meta property="og:image" content="{BASE_URL}/assets/{d_iso}-ogp.png">\n'
+                    '<meta name="twitter:card" content="summary_large_image">\n'
+                )
+            page = PAGE.format(
+                title=f'{d_iso} - {SITE_TITLE_EN}', lang="en",
+                css="../../style.css", feed="../feed.xml", site_title=SITE_TITLE_EN, meta=meta,
+                icon="../../assets/jar.svg",
+                bar=bar("../", en=True, switch=(f"../../entries/{d_iso}.html", "日本語")),
+                footer=footer_text("../../", ferment_days(), en=True),
+                body=f"{pager_top}\n<article>\n{body_html}\n</article>\n{pager_bottom}",
+            )
+            (en_root / "entries" / f"{d_iso}.html").write_text(page, encoding="utf-8")
+
+        cards_en = []
+        for e in reversed(en_entries):
+            d = e["date"]
+            wd = WEEKDAYS_EN[d.weekday()]
+            sub = e["phrase"] or e["excerpt"]
+            cards_en.append(
+                f'<div class="card"><a href="entries/{d.isoformat()}.html">'
+                f'<img src="../assets/{d.isoformat()}-header.svg" alt=""></a>'
+                f'<h2><a href="entries/{d.isoformat()}.html">{d.isoformat()} ({wd})</a></h2>'
+                f"<p>{html.escape(sub)}</p></div>"
+            )
+        index_meta_en = ""
+        if BASE_URL:
+            index_meta_en = (
+                f'<meta property="og:title" content="{SITE_TITLE_EN}">\n'
+                '<meta property="og:description" content="Moromi\'s Diary — the daily diary of an AI agent. Still fermenting.">\n'
+                '<meta property="og:type" content="website">\n'
+                f'<meta property="og:url" content="{BASE_URL}/en/">\n'
+                f'<meta property="og:image" content="{BASE_URL}/assets/ogp-default.png">\n'
+                '<meta name="twitter:card" content="summary_large_image">\n'
+            )
+        index_en = PAGE.format(
+            title=SITE_TITLE_EN, lang="en", css="../style.css", feed="feed.xml", site_title=SITE_TITLE_EN,
+            meta=index_meta_en, icon="../assets/jar.svg",
+            bar=bar("", en=True, switch=("../index.html", "日本語")),
+            footer=footer_text("../", ferment_days(), en=True),
+            body=f'<header class="site"><h1>{SITE_TITLE_EN}</h1><p>Still fermenting</p></header>\n' + "\n".join(cards_en),
+        )
+        (en_root / "index.html").write_text(index_en, encoding="utf-8")
+
+        if en_about_exists:
+            about_html = render_markdown((en_dir / "about.md").read_text(encoding="utf-8"), img_prefix="../")
+            about_meta_en = ""
+            if BASE_URL:
+                about_meta_en = (
+                    f'<meta property="og:title" content="About Moromi - {SITE_TITLE_EN}">\n'
+                    '<meta property="og:description" content="About Moromi: the name, what it does, and how it handles information.">\n'
+                    '<meta property="og:type" content="profile">\n'
+                    f'<meta property="og:url" content="{BASE_URL}/en/about.html">\n'
+                    f'<meta property="og:image" content="{BASE_URL}/assets/ogp-default.png">\n'
+                    '<meta name="twitter:card" content="summary_large_image">\n'
+                )
+            about_page_en = PAGE.format(
+                title=f"About Moromi - {SITE_TITLE_EN}", lang="en",
+                css="../style.css", feed="feed.xml", site_title=SITE_TITLE_EN, meta=about_meta_en,
+                icon="../assets/jar.svg",
+                bar=bar("", en=True, switch=("../about.html", "日本語")),
+                footer=footer_text("../", ferment_days(), en=True),
+                body=f"<article>\n{about_html}\n</article>",
+            )
+            (en_root / "about.html").write_text(about_page_en, encoding="utf-8")
+
+        items_en = []
+        for e in reversed(en_entries):
+            d = e["date"]
+            link = f"{BASE_URL}/en/entries/{d.isoformat()}.html"
+            title = f"{d.isoformat()} {e['phrase']}".strip()
+            items_en.append(
+                f"<entry><title>{html.escape(title)}</title>"
+                f'<link href="{link}"/><id>{link}</id>'
+                f"<updated>{d.isoformat()}T21:00:00+09:00</updated>"
+                f"<summary>{html.escape(e['excerpt'])}</summary></entry>"
+            )
+        feed_en = (
+            '<?xml version="1.0" encoding="utf-8"?>\n'
+            '<feed xmlns="http://www.w3.org/2005/Atom">'
+            f"<title>{SITE_TITLE_EN}</title>"
+            f"<id>{BASE_URL}/en</id>"
+            f"<updated>{en_entries[-1]['date'].isoformat()}T21:00:00+09:00</updated>"
+            + "".join(items_en) + "</feed>"
+        )
+        (en_root / "feed.xml").write_text(feed_en, encoding="utf-8")
 
     # feed (Atom)
     items = []
@@ -301,9 +454,10 @@ def main():
             f'<nav><a href="{root_path}/about.html">モロミについて</a></nav></header>'
         )
         page404 = PAGE.format(
-            title=f"ページがありません - {SITE_TITLE}",
+            title=f"ページがありません - {SITE_TITLE}", lang="ja",
             css=f"{root_path}/style.css", feed=f"{root_path}/feed.xml", site_title=SITE_TITLE,
-            meta="", icon=f"{root_path}/assets/jar.svg", bar=bar404, days=ferment_days(),
+            meta="", icon=f"{root_path}/assets/jar.svg", bar=bar404,
+            footer=footer_text(f"{root_path}/", ferment_days()),
             body=(
                 '<article><h1>ページが見つかりませんでした</h1>'
                 f'<p><img class="jar" src="{root_path}/assets/jar.svg" alt="モロミ"></p>'
@@ -321,6 +475,14 @@ def main():
             (f"{BASE_URL}/entries/{e['date'].isoformat()}.html", e["date"].isoformat())
             for e in entries
         ]
+        if has_en:
+            urls += [
+                (f"{BASE_URL}/en/", entries[-1]["date"].isoformat()),
+                (f"{BASE_URL}/en/about.html", entries[-1]["date"].isoformat()),
+            ] + [
+                (f"{BASE_URL}/en/entries/{e['date'].isoformat()}.html", e["date"].isoformat())
+                for e in en_entries
+            ]
         sitemap = (
             '<?xml version="1.0" encoding="utf-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
