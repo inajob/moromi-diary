@@ -260,7 +260,7 @@ def main():
         pager_top = f'<nav class="pager top">{prev_a}{next_a}</nav>'
         pager_bottom = f'<nav class="pager">{prev_a}{next_a}</nav>'
         d_iso = e["date"].isoformat()
-        og_title = f"{d_iso} {e['phrase']}".strip()
+        og_title = f"{d_iso} {e['phrase']}".strip() + f" - {SITE_TITLE}"
         meta = ""
         if BASE_URL:
             meta = (
@@ -278,7 +278,7 @@ def main():
             else:
                 switch = ("../en/index.html", "English")
         page = PAGE.format(
-            title=f'{e["date"].isoformat()} - {SITE_TITLE}', lang="ja",
+            title=f'{e["date"].isoformat()} {e["phrase"]} - {SITE_TITLE}'.strip(), lang="ja",
             css="../style.css", feed="../feed.xml", site_title=SITE_TITLE, meta=meta,
             icon="../assets/jar.svg", bar=bar("../", switch=switch),
             footer=footer_text("../", ferment_days()),
@@ -360,7 +360,7 @@ def main():
             pager_top = f'<nav class="pager top">{prev_a}{next_a}</nav>'
             pager_bottom = f'<nav class="pager">{prev_a}{next_a}</nav>'
             d_iso = e["date"].isoformat()
-            og_title = f"{d_iso} {e['phrase']}".strip()
+            og_title = f"{d_iso} {e['phrase']}".strip() + f" - {SITE_TITLE_EN}"
             meta = ""
             if BASE_URL:
                 meta = (
@@ -372,7 +372,7 @@ def main():
                     '<meta name="twitter:card" content="summary_large_image">\n'
                 )
             page = PAGE.format(
-                title=f'{d_iso} - {SITE_TITLE_EN}', lang="en",
+                title=f'{d_iso} {e["phrase"]} - {SITE_TITLE_EN}'.strip(), lang="en",
                 css="../../style.css", feed="../feed.xml", site_title=SITE_TITLE_EN, meta=meta,
                 icon="../../assets/jar.svg",
                 bar=bar("../", en=True, switch=(f"../../entries/{d_iso}.html", "日本語")),
