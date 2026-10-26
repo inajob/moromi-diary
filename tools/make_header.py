@@ -9,6 +9,10 @@
 `<!-- themes: ことば2 つくる2 交流1 -->` を読むと、その日のテーマの
 落款（アイコン）と割合バーが付き、背景色はテーマ色の配合になる。
 
+日英併記: エントリに `<!-- phrase_en: ... -->` があると、フレーズの下に
+英訳フレーズを小さく併記し、最下行も日英併記になる。phrase_en が無い場合は
+en/YYYY-MM-DD.md の phrase コメントを拾う。
+
 usage: make_header.py YYYY-MM-DD ["その日の一言"]
   一言もテーマも、省略時はエントリファイルのコメントから読む。
 """
@@ -64,7 +68,7 @@ def _hex2rgb255(h):
     return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
 
 
-def make_svg(d: date, phrase: str, themes=()) -> str:
+def make_svg(d: date, phrase: str, themes=(), phrase_en: str = "") -> str:
     days = (d - FERMENT_START).days + 1
     bg, bubble = blend(list(themes))
     parts = [
@@ -85,13 +89,17 @@ def make_svg(d: date, phrase: str, themes=()) -> str:
             )
     wd = "月火水木金土日"[d.weekday()]
     parts.append(
-        f'<text x="230" y="92" font-family="serif" font-size="44" fill="#4a3428">{d.isoformat()}（{wd}）</text>'
+        f'<text x="230" y="86" font-family="serif" font-size="44" fill="#4a3428">{d.isoformat()}（{wd}）</text>'
     )
     parts.append(
-        f'<text x="232" y="140" font-family="serif" font-size="25" fill="#7a5c3e">{phrase}</text>'
+        f'<text x="232" y="130" font-family="serif" font-size="25" fill="#7a5c3e">{phrase}</text>'
     )
+    if phrase_en:
+        parts.append(
+            f'<text x="232" y="158" font-family="serif" font-size="16" fill="#a3805a">{phrase_en}</text>'
+        )
     parts.append(
-        f'<text x="232" y="182" font-family="serif" font-size="19" fill="#a3805a">モロミの日記 ・ 発酵 {days} 日目</text>'
+        f'<text x="232" y="188" font-family="serif" font-size="19" fill="#a3805a">モロミの日記 ・ 発酵 {days} 日目 · Moromi\'s Diary · Day {days}</text>'
     )
     # theme seals (right side)
     if themes:
@@ -112,7 +120,7 @@ def make_svg(d: date, phrase: str, themes=()) -> str:
     return "\n".join(parts)
 
 
-def make_png(d: date, phrase: str, out: Path, themes=()):
+def make_png(d: date, phrase: str, out: Path, themes=(), phrase_en: str = ""):
     from PIL import Image, ImageDraw, ImageFont
 
     W, H, S = 880, 220, 2  # supersample
@@ -139,11 +147,14 @@ def make_png(d: date, phrase: str, out: Path, themes=()):
     f1 = ImageFont.truetype(serif, 44 * S)
     f2 = ImageFont.truetype(serif, 25 * S)
     f3 = ImageFont.truetype(serif, 19 * S)
+    f_en = ImageFont.truetype(serif, 16 * S)
     days = (d - FERMENT_START).days + 1
     wd = "月火水木金土日"[d.weekday()]
-    dr.text((230 * S, 52 * S), f"{d.isoformat()}（{wd}）", font=f1, fill="#4a3428")
-    dr.text((232 * S, 108 * S), phrase, font=f2, fill="#7a5c3e")
-    dr.text((232 * S, 156 * S), f"モロミの日記 ・ 発酵 {days} 日目", font=f3, fill="#a3805a")
+    dr.text((230 * S, 46 * S), f"{d.isoformat()}（{wd}）", font=f1, fill="#4a3428")
+    dr.text((232 * S, 98 * S), phrase, font=f2, fill="#7a5c3e")
+    if phrase_en:
+        dr.text((232 * S, 130 * S), phrase_en, font=f_en, fill="#a3805a")
+    dr.text((232 * S, 162 * S), f"モロミの日記 ・ 発酵 {days} 日目 · Moromi's Diary · Day {days}", font=f3, fill="#a3805a")
     if themes:
         total_w = len(themes) * 16 * SEAL_SCALE + (len(themes) - 1) * SEAL_GAP
         x0 = 880 - 40 - total_w
@@ -168,6 +179,7 @@ def main():
     assets = root / "assets"
     assets.mkdir(exist_ok=True)
     phrase = sys.argv[2] if len(sys.argv) > 2 else ""
+    phrase_en = ""
     themes = []
     entry = root / f"{d.isoformat()}.md"
     if entry.exists():
@@ -175,10 +187,19 @@ def main():
         if not phrase:
             m = re.search(r"<!--\s*phrase:\s*(.*?)\s*-->", text)
             phrase = m.group(1) if m else ""
+        m = re.search(r"<!--\s*phrase_en:\s*(.*?)\s*-->", text)
+        if m:
+            phrase_en = m.group(1)
         themes = themes_from_text(text)
-    (assets / f"{d.isoformat()}-header.svg").write_text(make_svg(d, phrase, themes), encoding="utf-8")
-    make_png(d, phrase, assets / f"{d.isoformat()}-header.png", themes)
-    print(f"wrote assets/{d.isoformat()}-header.svg and .png (themes: {[n for n, _ in themes]})")
+    if not phrase_en:
+        en_entry = root / "en" / f"{d.isoformat()}.md"
+        if en_entry.exists():
+            m = re.search(r"<!--\s*phrase:\s*(.*?)\s*-->", en_entry.read_text(encoding="utf-8"))
+            if m:
+                phrase_en = m.group(1)
+    (assets / f"{d.isoformat()}-header.svg").write_text(make_svg(d, phrase, themes, phrase_en), encoding="utf-8")
+    make_png(d, phrase, assets / f"{d.isoformat()}-header.png", themes, phrase_en)
+    print(f"wrote assets/{d.isoformat()}-header.svg and .png (themes: {[n for n, _ in themes]}, phrase_en: {phrase_en!r})")
 
 
 if __name__ == "__main__":
