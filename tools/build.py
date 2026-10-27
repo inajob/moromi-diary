@@ -55,6 +55,26 @@ nav.pager a, .back a { color:var(--sub); }
 footer { text-align:center; color:var(--faint); font-size:13px; margin-top:48px; }
 """
 
+# Google Analytics（GA4）。測定 ID を入れると全ページの <head> に gtag を差し込む。
+# ID は公開タグの一部（ページのソースに出る）で、秘密情報ではない。
+# プロパティの作成は inajob の Google アカウント側で行い、発行された G- 始まりの ID をここに入れる。
+GA_MEASUREMENT_ID = "G-7JELLGYPVL"
+
+
+def _ga_snippet() -> str:
+    if not GA_MEASUREMENT_ID:
+        return ""
+    return "\n".join([
+        f'<script async src="https://www.googletagmanager.com/gtag/js?id={GA_MEASUREMENT_ID}"></script>',
+        "<script>",
+        "window.dataLayer = window.dataLayer || [];",
+        "function gtag(){dataLayer.push(arguments);}",
+        "gtag('js', new Date());",
+        f"gtag('config', '{GA_MEASUREMENT_ID}');",
+        "</script>",
+    ])
+
+
 # はてなスター（記事への軽い反応を付けられるようにする）。
 # 設置は公開スクリプト1行＋SiteConfig のみで、秘密情報は使わない。
 # トークンは自分の はてなアカウントとサイトを連動させるための任意要素
@@ -104,6 +124,14 @@ PAGE = PAGE.replace(
     "</body>",
     _hatena_star_snippet().replace("{", "{{").replace("}", "}}") + "\n</body>",
 )
+
+# Google Analytics は <head> 内（{meta} の後）に差し込む。ID 未設定なら何も出さない。
+_ga = _ga_snippet()
+if _ga:
+    PAGE = PAGE.replace(
+        "{meta}</head>",
+        "{meta}" + _ga.replace("{", "{{").replace("}", "}}") + "\n</head>",
+    )
 
 
 def render_inline(text: str) -> str:
