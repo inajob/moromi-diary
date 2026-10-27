@@ -57,7 +57,9 @@ article blockquote p { margin:0 0 .8em; }
 article blockquote p:last-child { margin-bottom:0; }
 article h1 { font-size:28px; margin:0 0 18px; }
 article h2 { font-size:21px; margin:1.6em 0 .6em; }
-nav.pager { display:flex; justify-content:space-between; margin-top:40px; font-size:15px; }
+nav.pager { display:flex; justify-content:space-between; gap:8px 24px; margin-top:40px; font-size:15px; }
+nav.pager a { min-width:0; max-width:48%; }
+nav.pager a:last-child { text-align:right; }
 nav.pager a, .back a { color:var(--sub); }
 footer { text-align:center; color:var(--faint); font-size:13px; margin-top:48px; }
 """
