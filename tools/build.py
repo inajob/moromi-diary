@@ -25,11 +25,13 @@ ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
 
 CSS = """
-:root { --ink:#4a3428; --sub:#7a5c3e; --faint:#a3805a; --bg:#fdf9ef; --card:#fffdf6; --line:#e8dcc3; }
+:root { --ink:#4a3428; --sub:#7a5c3e; --faint:#a3805a; --bg:#f1e8d2; --card:#fffdf6; --line:#e8dcc3; }
 * { box-sizing: border-box; }
 body { margin:0; background:var(--bg); color:var(--ink);
   font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif CJK JP",serif; line-height:1.9; }
-main { max-width:720px; margin:0 auto; padding:32px 20px 64px; }
+main { width:min(720px, calc(100% - 24px)); margin:24px auto; padding:32px 28px 64px;
+  background:var(--card); border:1px solid var(--line); border-radius:18px;
+  box-shadow:0 2px 24px rgba(74,52,40,.08); }
 header.site { text-align:center; margin:24px 0 40px; }
 header.site h1 { font-size:34px; letter-spacing:.12em; margin:0; }
 header.site p { color:var(--faint); margin:6px 0 0; font-size:14px; letter-spacing:.2em; }
