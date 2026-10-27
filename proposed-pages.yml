@@ -1,0 +1,52 @@
+name: Build and deploy diary site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Cache OGP deps (pip + font)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pip
+            ~/ogp-deps
+          key: ogp-deps-v1
+      - name: Install OGP rendering deps
+        run: |
+          pip install pillow
+          mkdir -p ~/ogp-deps
+          if [ ! -f ~/ogp-deps/NotoSerifCJK-Bold.ttc ]; then
+            curl -sL -o ~/ogp-deps/NotoSerifCJK-Bold.ttc https://github.com/notofonts/noto-cjk/raw/main/Serif/OTC/NotoSerifCJK-Bold.ttc
+          fi
+          sudo mkdir -p /usr/share/fonts/opentype/noto
+          sudo cp ~/ogp-deps/NotoSerifCJK-Bold.ttc /usr/share/fonts/opentype/noto/
+      - name: Render OGP images
+        run: python3 tools/make_ogp.py all
+      - name: Build site
+        run: python3 tools/build.py
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4
