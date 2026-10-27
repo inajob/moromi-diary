@@ -48,6 +48,13 @@ article .jar { width:150px; }
 .bar nav a { color:var(--sub); font-size:14px; text-decoration:none; }
 nav.pager.top { margin:0 0 24px; }
 article p { margin:0 0 1.2em; }
+article blockquote { margin:0 0 1.2em; padding:.85em 1.1em .85em 2.1em; position:relative;
+  background:#faf2dd; border-left:4px solid var(--faint); border-radius:0 10px 10px 0;
+  color:#5d4630; }
+article blockquote::before { content:"“"; position:absolute; left:.35em; top:.05em;
+  font-size:30px; line-height:1; color:var(--faint); }
+article blockquote p { margin:0 0 .8em; }
+article blockquote p:last-child { margin-bottom:0; }
 article h1 { font-size:28px; margin:0 0 18px; }
 article h2 { font-size:21px; margin:1.6em 0 .6em; }
 nav.pager { display:flex; justify-content:space-between; margin-top:40px; font-size:15px; }
@@ -157,17 +164,34 @@ def render_markdown(md: str, img_prefix: str = "") -> str:
             out.append("<{t}>".format(t=lst[0]) + "".join(f"<li>{render_inline(i)}</li>" for i in lst[1]) + f"</{lst[0]}>")
             lst = None
 
+    quote, quote_open = [], []
+
+    def flush_quote_para():
+        if quote_open:
+            quote.append(" ".join(quote_open))
+            quote_open.clear()
+
+    def flush_quote():
+        flush_quote_para()
+        if quote:
+            inner = "".join(f"<p>{render_inline(p)}</p>" for p in quote)
+            out.append(f"<blockquote>{inner}</blockquote>")
+            quote.clear()
+
+    def flush_all():
+        flush_para(); flush_list(); flush_quote()
+
     for raw in md.split("\n"):
         line = raw.rstrip()
         if line.startswith("<!--"):
             continue
         m = re.match(r"^(#{1,3})\s+(.*)", line)
         if m:
-            flush_para(); flush_list()
+            flush_all()
             out.append(f"<h{len(m.group(1))}>{render_inline(m.group(2))}</h{len(m.group(1))}>")
             continue
         if re.match(r"^!\[(.*?)\]\((.*?)\)\s*$", line):
-            flush_para(); flush_list()
+            flush_all()
             im = re.match(r"^!\[(.*?)\]\((.*?)\)\s*$", line)
             src = im.group(2)
             if img_prefix and src.startswith("assets/"):
@@ -176,26 +200,33 @@ def render_markdown(md: str, img_prefix: str = "") -> str:
             out.append(f'<img src="{src}" alt="{html.escape(im.group(1))}"{cls}>')
             continue
         if re.match(r"^---+$", line):
-            flush_para(); flush_list(); out.append("<hr>"); continue
-        if line.startswith("> "):
-            flush_para(); flush_list()
-            out.append(f"<blockquote><p>{render_inline(line[2:])}</p></blockquote>"); continue
+            flush_all(); out.append("<hr>"); continue
+        if line == ">" or line.startswith("> "):
+            content = line[1:]
+            if content.startswith(" "):
+                content = content[1:]
+            if content.strip():
+                flush_para(); flush_list()
+                quote_open.append(content.strip())
+            else:
+                flush_quote_para()
+            continue
         m = re.match(r"^[-*]\s+(.*)", line)
         if m:
-            flush_para()
+            flush_para(); flush_quote()
             if not lst or lst[0] != "ul":
                 flush_list(); lst = ["ul", []]
             lst[1].append(m.group(1)); continue
         m = re.match(r"^\d+\.\s+(.*)", line)
         if m:
-            flush_para()
+            flush_para(); flush_quote()
             if not lst or lst[0] != "ol":
                 flush_list(); lst = ["ol", []]
             lst[1].append(m.group(1)); continue
         if not line.strip():
-            flush_para(); flush_list(); continue
+            flush_all(); continue
         para.append(line.strip())
-    flush_para(); flush_list()
+    flush_all()
     return "\n".join(out)
 
 
