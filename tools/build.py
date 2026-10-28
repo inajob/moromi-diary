@@ -57,6 +57,15 @@ article blockquote::before { content:"“"; position:absolute; left:.35em; top:.
   font-size:30px; line-height:1; color:var(--faint); }
 article blockquote p { margin:0 0 .8em; }
 article blockquote p:last-child { margin-bottom:0; }
+article blockquote.has-speaker { padding:.85em 1.1em; }
+article blockquote.has-speaker::before { content:""; }
+.speaker { display:flex; align-items:center; gap:.55em; margin-bottom:.6em; }
+.speaker img.sp-icon { width:30px; height:30px; border-radius:50%; object-fit:contain;
+  padding:2px; border:1px solid var(--line); background:#fff; }
+.speaker span.sp-icon { width:30px; height:30px; border-radius:50%; display:inline-flex;
+  align-items:center; justify-content:center; font-weight:bold; font-size:15px;
+  color:var(--sub); background:#f3e6c8; border:1px solid var(--line); }
+.speaker .sp-name { font-weight:bold; font-size:.92em; color:var(--sub); letter-spacing:.04em; }
 article h1 { font-size:28px; margin:0 0 18px; }
 article h2 { font-size:21px; margin:1.6em 0 .6em; }
 nav.pager { display:flex; justify-content:space-between; gap:8px 24px; margin-top:40px; font-size:15px; }
@@ -169,6 +178,24 @@ def render_markdown(md: str, img_prefix: str = "") -> str:
             lst = None
 
     quote, quote_open = [], []
+    quote_speaker = [None]
+
+    # 会話の引用は、先頭に <!-- speaker: 名前 --> と置くと話者アイコン付きになる。
+    SPEAKERS = {
+        "inajob": ("inajob", "assets/inajob-icon.svg"),
+        "moromi": ("モロミ", "assets/jar.svg"),
+        "モロミ": ("モロミ", "assets/jar.svg"),
+    }
+
+    def speaker_header(name: str) -> str:
+        label, icon = SPEAKERS.get(name, (name, None))
+        if icon:
+            src = img_prefix + icon if img_prefix else icon
+            ic = f'<img class="sp-icon" src="{src}" alt="">'
+        else:
+            initial = html.escape(name[:1].upper() if name else "?")
+            ic = f'<span class="sp-icon">{initial}</span>'
+        return f'<div class="speaker">{ic}<span class="sp-name">{html.escape(label)}</span></div>'
 
     def flush_quote_para():
         if quote_open:
@@ -179,8 +206,13 @@ def render_markdown(md: str, img_prefix: str = "") -> str:
         flush_quote_para()
         if quote:
             inner = "".join(f"<p>{render_inline(p)}</p>" for p in quote)
-            out.append(f"<blockquote>{inner}</blockquote>")
+            if quote_speaker[0]:
+                inner = speaker_header(quote_speaker[0]) + inner
+                out.append(f'<blockquote class="has-speaker">{inner}</blockquote>')
+            else:
+                out.append(f"<blockquote>{inner}</blockquote>")
             quote.clear()
+        quote_speaker[0] = None
 
     def flush_all():
         flush_para(); flush_list(); flush_quote()
@@ -209,6 +241,11 @@ def render_markdown(md: str, img_prefix: str = "") -> str:
             content = line[1:]
             if content.startswith(" "):
                 content = content[1:]
+            sm = re.match(r"^<!--\s*speaker:\s*(.+?)\s*-->$", content.strip())
+            if sm:
+                flush_para(); flush_list()
+                quote_speaker[0] = sm.group(1)
+                continue
             if content.strip():
                 flush_para(); flush_list()
                 quote_open.append(content.strip())
