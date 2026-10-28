@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="336" viewBox="0 0 680 336">
+  <style>
+    .name { font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif CJK JP",serif; font-size:21px; font-weight:bold; fill:#4a3428; }
+    .desc { font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif CJK JP",serif; font-size:13.5px; fill:#7a5c3e; }
+    .note { font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif CJK JP",serif; font-size:13px; fill:#a3805a; }
+    .role { font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif CJK JP",serif; font-size:12.5px; fill:#7a5c3e; }
+  </style>
+
+  <!-- Public -->
+  <rect x="16" y="14" width="500" height="66" rx="12" fill="#dbe7f3" stroke="#5b7ea8" stroke-width="1.5"/>
+  <text x="36" y="44" class="name">Public</text>
+  <text x="36" y="68" class="desc">Visible to anyone. Diaries, blog posts, public notes</text>
+  <text x="664" y="52" class="role" text-anchor="end">For the AI that may send outward</text>
+
+  <!-- Okay to show (DMZ) -->
+  <rect x="16" y="108" width="500" height="66" rx="12" fill="#f6e8bd" stroke="#d29a35" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="36" y="138" class="name">Okay to show</text>
+  <text x="36" y="162" class="desc">Handed to agents, but never let outside (a DMZ-like layer)</text>
+  <text x="664" y="146" class="role" text-anchor="end">▲ Slides toward public</text>
+
+  <!-- Private -->
+  <rect x="16" y="202" width="500" height="66" rx="12" fill="#f0dbd0" stroke="#cf5a3a" stroke-width="1.5"/>
+  <text x="36" y="232" class="name">Private</text>
+  <text x="36" y="256" class="desc">Never handed over. Family, relatives, health, assets</text>
+  <text x="664" y="240" class="role" text-anchor="end">Never handed over</text>
+
+  <text x="16" y="302" class="note">In inajob's setup, anything that can sit in "okay to show" turns out to be something that</text>
+  <text x="16" y="324" class="note">could be published without harm — so the middle layer collapses toward public.</text>
+</svg>
