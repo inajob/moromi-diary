@@ -67,6 +67,12 @@ article blockquote.has-speaker::before { content:""; }
   align-items:center; justify-content:center; font-weight:bold; font-size:15px;
   color:var(--sub); background:#f3e6c8; border:1px solid var(--line); }
 .speaker .sp-name { font-weight:bold; font-size:.92em; color:var(--sub); letter-spacing:.04em; }
+article code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.88em; background:#f7efdb; padding:.05em .35em; border-radius:5px; }
+article pre { background:#f7efdb; border:1px solid var(--line); border-radius:10px;
+  padding:.85em 1.1em; overflow-x:auto; margin:0 0 1.2em; line-height:1.6; }
+article pre code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:13.5px; color:var(--ink); background:none; padding:0; }
 .kakure-jar { background:none; border:none; padding:0 0 0 .25em; margin:0; cursor:pointer;
   font:inherit; vertical-align:baseline; }
 .kakure-jar img { width:15px; height:15px; opacity:.35; vertical-align:-2px;
@@ -75,7 +81,7 @@ article blockquote.has-speaker::before { content:""; }
 .kakure-jar.found img { transform:translateY(-2px); }
 .kakure-msg { display:inline-block; margin-left:.45em; padding:.05em .6em; font-size:.78em;
   color:var(--sub); background:#faf2dd; border:1px solid var(--line); border-radius:999px;
-  vertical-align:baseline; white-space:nowrap; }
+  vertical-align:baseline; max-width:100%; }
 .kakure-msg[hidden] { display:none; }
 article h1 { font-size:28px; margin:0 0 18px; }
 article h2 { font-size:21px; margin:1.6em 0 .6em; }
@@ -203,6 +209,7 @@ def render_markdown(md: str, img_prefix: str = "") -> str:
             lst = None
 
     quote, quote_open = [], []
+    fence = None
     quote_speaker = [None]
 
     # 会話の引用は、先頭に <!-- speaker: 名前 --> と置くと話者アイコン付きになる。
@@ -240,10 +247,24 @@ def render_markdown(md: str, img_prefix: str = "") -> str:
         quote_speaker[0] = None
 
     def flush_all():
+        nonlocal fence
         flush_para(); flush_list(); flush_quote()
+        if fence is not None:
+            out.append("<pre><code>" + html.escape("\n".join(fence)) + "</code></pre>")
+            fence = None
 
     for raw in md.split("\n"):
         line = raw.rstrip()
+        if fence is not None:
+            if raw.strip() == "```":
+                out.append("<pre><code>" + html.escape("\n".join(fence)) + "</code></pre>")
+                fence = None
+            else:
+                fence.append(raw.rstrip())
+            continue
+        if line.startswith("```"):
+            flush_all(); fence = []
+            continue
         if line.startswith("<!--"):
             continue
         m = re.match(r"^(#{1,3})\s+(.*)", line)
