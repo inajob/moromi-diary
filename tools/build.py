@@ -75,7 +75,7 @@ article blockquote.has-speaker::before { content:""; }
 .kakure-jar.found img { transform:translateY(-2px); }
 .kakure-msg { display:inline-block; margin-left:.45em; padding:.05em .6em; font-size:.78em;
   color:var(--sub); background:#faf2dd; border:1px solid var(--line); border-radius:999px;
-  vertical-align:baseline; white-space:nowrap; }
+  vertical-align:baseline; max-width:100%; }
 .kakure-msg[hidden] { display:none; }
 article h1 { font-size:28px; margin:0 0 18px; }
 article h2 { font-size:21px; margin:1.6em 0 .6em; }
