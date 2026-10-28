@@ -8,6 +8,7 @@
 外部依存なし（標準ライブラリのみ）。BASE_URL は公開先が決まったら設定する。
 使い方: python3 tools/build.py
 """
+import hashlib
 import html
 import re
 import shutil
@@ -66,6 +67,16 @@ article blockquote.has-speaker::before { content:""; }
   align-items:center; justify-content:center; font-weight:bold; font-size:15px;
   color:var(--sub); background:#f3e6c8; border:1px solid var(--line); }
 .speaker .sp-name { font-weight:bold; font-size:.92em; color:var(--sub); letter-spacing:.04em; }
+.kakure-jar { background:none; border:none; padding:0 0 0 .25em; margin:0; cursor:pointer;
+  font:inherit; vertical-align:baseline; }
+.kakure-jar img { width:15px; height:15px; opacity:.35; vertical-align:-2px;
+  transition:opacity .2s, transform .2s; border-radius:0; }
+.kakure-jar:hover img, .kakure-jar.found img { opacity:1; }
+.kakure-jar.found img { transform:translateY(-2px); }
+.kakure-msg { display:inline-block; margin-left:.45em; padding:.05em .6em; font-size:.78em;
+  color:var(--sub); background:#faf2dd; border:1px solid var(--line); border-radius:999px;
+  vertical-align:baseline; white-space:nowrap; }
+.kakure-msg[hidden] { display:none; }
 article h1 { font-size:28px; margin:0 0 18px; }
 article h2 { font-size:21px; margin:1.6em 0 .6em; }
 nav.pager { display:flex; justify-content:space-between; gap:8px 24px; margin-top:40px; font-size:15px; }
@@ -144,6 +155,20 @@ PAGE = PAGE.replace(
     "</body>",
     _hatena_star_snippet().replace("{", "{{").replace("}", "}}") + "\n</body>",
 )
+
+# かくれ壺: 記事ページに1つだけ隠した小さな壺。クリックで発酵のひとことが出る。
+# PAGE は .format() を通るため、JS の波括弧は二重にしてエスケープする。
+_KAKURE_JS = """<script>
+document.addEventListener('click', function (e) {{
+  var b = e.target.closest('.kakure-jar');
+  if (!b) return;
+  var m = b.querySelector('.kakure-msg');
+  if (!m) return;
+  m.hidden = !m.hidden;
+  b.classList.toggle('found', !m.hidden);
+}});
+</script>"""
+PAGE = PAGE.replace("</body>", _KAKURE_JS + "\n</body>")
 
 # Google Analytics は <head> 内（{meta} の後）に差し込む。ID 未設定なら何も出さない。
 _ga = _ga_snippet()
@@ -322,6 +347,57 @@ def footer_text(agent_prefix: str, days: int, en: bool = False) -> str:
     )
 
 
+# かくれ壺のひとこと（日付シードで1つ選ぶ）
+KAKURE_MSGS = [
+    "見つけたね。発酵中…",
+    "ぷくぷく",
+    "まだ寝かせて",
+    "いい香りになってきた",
+    "今日の分はよく混ざった",
+    "甕の底で待ってた",
+    "しゅわしゅわ",
+    "開けるのはもうちょっと先",
+]
+KAKURE_MSGS_EN = [
+    "You found me. Still fermenting…",
+    "Bloop.",
+    "Let it rest a little longer.",
+    "Starting to smell nice.",
+    "Well mixed today.",
+    "Waiting at the bottom of the jar.",
+    "Fizz…",
+    "Not ready to open just yet.",
+]
+
+
+def add_kakure_jar(body_html: str, d: date, img_prefix: str, en: bool = False) -> str:
+    """記事本文のどこか1か所に小さな壺を隠す。場所もひとことも日付シードで決まる。
+
+    引用ブロックの中には入れない。候補がなければ何もしない。
+    """
+    seed = int(hashlib.md5(f"kakure-{d.isoformat()}".encode()).hexdigest(), 16)
+    spans = [(m.start(), m.end()) for m in re.finditer(r"<blockquote.*?</blockquote>", body_html, re.S)]
+    cands = []
+    for m in re.finditer(r"</(?:p|li|h2)>", body_html):
+        if any(s <= m.start() < e for s, e in spans):
+            continue
+        cands.append(m.start())
+    if not cands:
+        return body_html
+    if len(cands) >= 3:
+        cands = cands[1:]  # 先頭の段落には置かない（見つかりやすすぎる）
+    pos = cands[seed % len(cands)]
+    msgs = KAKURE_MSGS_EN if en else KAKURE_MSGS
+    msg = msgs[(seed >> 8) % len(msgs)]
+    label = "hidden jar" if en else "かくれ壺"
+    jar = (
+        f'<button type="button" class="kakure-jar" aria-label="{label}">'
+        f'<img src="{img_prefix}assets/jar.svg" alt="">'
+        f'<span class="kakure-msg" hidden>{html.escape(msg)}</span></button>'
+    )
+    return body_html[:pos] + jar + body_html[pos:]
+
+
 def main():
     entries = [parse_entry(p) for p in sorted(ROOT.glob("????-??-??.md"))]
     if not entries:
@@ -348,6 +424,7 @@ def main():
     # entry pages
     for i, e in enumerate(entries):
         body_html = render_markdown(e["md"], img_prefix="../")
+        body_html = add_kakure_jar(body_html, e["date"], "../")
         def pager_link(e, arrow):
             label = e["date"].isoformat()
             if e["phrase"]:
@@ -447,6 +524,7 @@ def main():
 
         for i, e in enumerate(en_entries):
             body_html = render_markdown(e["md"], img_prefix="../../")
+            body_html = add_kakure_jar(body_html, e["date"], "../../", en=True)
 
             def en_pager_link(ent, arrow):
                 label = ent["date"].isoformat()
