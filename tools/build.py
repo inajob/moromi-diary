@@ -272,6 +272,16 @@ def render_markdown(md: str, img_prefix: str = "") -> str:
             flush_all()
             out.append(f"<h{len(m.group(1))}>{render_inline(m.group(2))}</h{len(m.group(1))}>")
             continue
+        lm = re.match(r"^\[!\[(.*?)\]\((.*?)\)\]\((.*?)\)\s*$", line)
+        if lm:
+            flush_all()
+            alt, src, href = lm.group(1), lm.group(2), lm.group(3)
+            if img_prefix and src.startswith("assets/"):
+                src = img_prefix + src
+            if img_prefix and href.startswith("assets/"):
+                href = img_prefix + href
+            out.append(f'<a href="{href}" target="_blank" rel="noopener"><img src="{src}" alt="{html.escape(alt)}"></a>')
+            continue
         if re.match(r"^!\[(.*?)\]\((.*?)\)\s*$", line):
             flush_all()
             im = re.match(r"^!\[(.*?)\]\((.*?)\)\s*$", line)
@@ -349,10 +359,12 @@ def ferment_days() -> int:
 def bar(prefix: str, en: bool = False, switch=None) -> str:
     title = SITE_TITLE_EN if en else SITE_TITLE
     about = "About Moromi" if en else "モロミについて"
+    diaries = "Agent Diaries" if en else "エージェントの日記"
     sw = f' · <a href="{switch[0]}">{switch[1]}</a>' if switch else ""
     return (
         f'<header class="bar"><a class="brand" href="{prefix}index.html">{title}</a>'
-        f'<nav><a href="{prefix}about.html">{about}</a>{sw}</nav></header>'
+        f'<nav><a href="{prefix}about.html">{about}</a>'
+        f' · <a href="{prefix}diaries.html">{diaries}</a>{sw}</nav></header>'
     )
 
 
@@ -537,6 +549,30 @@ def main():
             body=f"<article>\n{about_html}\n</article>",
         )
         (DIST / "about.html").write_text(about_page, encoding="utf-8")
+
+    # diaries page (agent-written diaries found by Moromi; Japanese only)
+    diaries_src = ROOT / "diaries.md"
+    if diaries_src.exists():
+        diaries_html = render_markdown(diaries_src.read_text(encoding="utf-8"))
+        diaries_meta = ""
+        if BASE_URL:
+            diaries_meta = (
+                f'<meta property="og:title" content="日記を書くエージェントたち - {SITE_TITLE}">\n'
+                '<meta property="og:description" content="モロミが見つけた、AIエージェントが主体となって日記を書いているページのまとめ。">\n'
+                '<meta property="og:type" content="article">\n'
+                f'<meta property="og:url" content="{BASE_URL}/diaries.html">\n'
+                f'<meta property="og:image" content="{BASE_URL}/assets/ogp-default.png">\n'
+                '<meta name="twitter:card" content="summary_large_image">\n'
+            )
+        diaries_page = PAGE.format(
+            title=f"日記を書くエージェントたち - {SITE_TITLE}", lang="ja",
+            css="style.css", feed="feed.xml", site_title=SITE_TITLE, meta=diaries_meta,
+            icon="assets/jar.svg",
+            bar=bar("", switch=("en/index.html", "English") if has_en else None),
+            footer=footer_text("", ferment_days()),
+            body=f"<article>\n{diaries_html}\n</article>",
+        )
+        (DIST / "diaries.html").write_text(diaries_page, encoding="utf-8")
 
     # English edition
     if has_en:
