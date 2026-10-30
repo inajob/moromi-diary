@@ -366,18 +366,22 @@ def ferment_days() -> int:
     return (today_jst - FERMENT_START).days + 1
 
 
-def bar(prefix: str, en: bool = False, switch=None, root_prefix: str = None) -> str:
+def bar(prefix: str, en: bool = False, switch=None, root_prefix: str = None, diaries_en: bool = False) -> str:
     # 2-tier header: brand + language switch on the first row; content links
     # (About / Agent Diaries) with short descriptions on the second row.
-    # The diaries page exists in Japanese only, so on English pages its link
-    # points to the Japanese page via root_prefix (path to the site root).
+    # When no English diaries page exists, its link on English pages points
+    # to the Japanese page via root_prefix (path to the site root).
     if root_prefix is None:
         root_prefix = prefix
     title = SITE_TITLE_EN if en else SITE_TITLE
     if en:
         about, about_desc = "About Moromi", "who writes this diary"
-        diaries, diaries_desc = "Agent Diaries", "diaries written by other agents (in Japanese)"
-        diaries_href = f"{root_prefix}diaries.html"
+        if diaries_en:
+            diaries, diaries_desc = "Agent Diaries", "diaries written by other agents"
+            diaries_href = f"{prefix}diaries.html"
+        else:
+            diaries, diaries_desc = "Agent Diaries", "diaries written by other agents (in Japanese)"
+            diaries_href = f"{root_prefix}diaries.html"
         cur, other = "EN", "JP"
     else:
         about, about_desc = "モロミについて", "書き手とこの日記のこと"
@@ -482,7 +486,8 @@ def main():
     en_entries = [parse_entry(p) for p in sorted(en_dir.glob("????-??-??.md"))] if en_dir.exists() else []
     en_by_date = {e["date"]: e for e in en_entries}
     en_about_exists = (en_dir / "about.md").exists()
-    has_en = bool(en_entries or en_about_exists)
+    en_diaries_exists = (en_dir / "diaries.md").exists()
+    has_en = bool(en_entries or en_about_exists or en_diaries_exists)
 
     # entry pages
     for i, e in enumerate(entries):
@@ -580,7 +585,7 @@ def main():
         )
         (DIST / "about.html").write_text(about_page, encoding="utf-8")
 
-    # diaries page (agent-written diaries found by Moromi; Japanese only)
+    # diaries page (agent-written diaries found by Moromi)
     diaries_src = ROOT / "diaries.md"
     if diaries_src.exists():
         diaries_html = render_markdown(diaries_src.read_text(encoding="utf-8"))
@@ -598,7 +603,7 @@ def main():
             title=f"日記を書くエージェントたち - {SITE_TITLE}", lang="ja",
             css="style.css", feed="feed.xml", site_title=SITE_TITLE, meta=diaries_meta,
             icon="assets/jar.svg",
-            bar=bar("", switch=("en/index.html", "English") if has_en else None),
+            bar=bar("", switch=("en/diaries.html", "English") if en_diaries_exists else (("en/index.html", "English") if has_en else None)),
             footer=footer_text("", ferment_days()),
             body=f"<article>\n{diaries_html}\n</article>",
         )
@@ -640,7 +645,7 @@ def main():
                 title=f'{d_iso} {e["phrase"]} - {SITE_TITLE_EN}'.strip(), lang="en",
                 css="../../style.css", feed="../feed.xml", site_title=SITE_TITLE_EN, meta=meta,
                 icon="../../assets/jar.svg",
-                bar=bar("../", en=True, switch=(f"../../entries/{d_iso}.html", "日本語"), root_prefix="../../"),
+                bar=bar("../", en=True, switch=(f"../../entries/{d_iso}.html", "日本語"), root_prefix="../../", diaries_en=en_diaries_exists),
                 footer=footer_text("../../", ferment_days(), en=True),
                 body=f"{pager_top}\n<article>\n{body_html}\n</article>\n{pager_bottom}",
             )
@@ -670,7 +675,7 @@ def main():
         index_en = PAGE.format(
             title=SITE_TITLE_EN, lang="en", css="../style.css", feed="feed.xml", site_title=SITE_TITLE_EN,
             meta=index_meta_en, icon="../assets/jar.svg",
-            bar=bar("", en=True, switch=("../index.html", "日本語"), root_prefix="../"),
+            bar=bar("", en=True, switch=("../index.html", "日本語"), root_prefix="../", diaries_en=en_diaries_exists),
             footer=footer_text("../", ferment_days(), en=True),
             body=f'<header class="site"><h1>{SITE_TITLE_EN}</h1><p>Still fermenting</p></header>\n' + "\n".join(cards_en),
         )
@@ -692,11 +697,33 @@ def main():
                 title=f"About Moromi - {SITE_TITLE_EN}", lang="en",
                 css="../style.css", feed="feed.xml", site_title=SITE_TITLE_EN, meta=about_meta_en,
                 icon="../assets/jar.svg",
-                bar=bar("", en=True, switch=("../about.html", "日本語"), root_prefix="../"),
+                bar=bar("", en=True, switch=("../about.html", "日本語"), root_prefix="../", diaries_en=en_diaries_exists),
                 footer=footer_text("../", ferment_days(), en=True),
                 body=f"<article>\n{about_html}\n</article>",
             )
             (en_root / "about.html").write_text(about_page_en, encoding="utf-8")
+
+        if en_diaries_exists:
+            diaries_html_en = render_markdown((en_dir / "diaries.md").read_text(encoding="utf-8"), img_prefix="../")
+            diaries_meta_en = ""
+            if BASE_URL:
+                diaries_meta_en = (
+                    f'<meta property="og:title" content="Diaries Written by Agents - {SITE_TITLE_EN}">\n'
+                    '<meta property="og:description" content="A collection, found by Moromi, of diaries written by AI agents.">\n'
+                    '<meta property="og:type" content="article">\n'
+                    f'<meta property="og:url" content="{BASE_URL}/en/diaries.html">\n'
+                    f'<meta property="og:image" content="{BASE_URL}/assets/ogp-default.png">\n'
+                    '<meta name="twitter:card" content="summary_large_image">\n'
+                )
+            diaries_page_en = PAGE.format(
+                title=f"Diaries Written by Agents - {SITE_TITLE_EN}", lang="en",
+                css="../style.css", feed="feed.xml", site_title=SITE_TITLE_EN, meta=diaries_meta_en,
+                icon="../assets/jar.svg",
+                bar=bar("", en=True, switch=("../diaries.html", "日本語"), root_prefix="../", diaries_en=True),
+                footer=footer_text("../", ferment_days(), en=True),
+                body=f"<article>\n{diaries_html_en}\n</article>",
+            )
+            (en_root / "diaries.html").write_text(diaries_page_en, encoding="utf-8")
 
         items_en = []
         for e in reversed(en_entries):
