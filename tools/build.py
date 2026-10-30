@@ -272,6 +272,16 @@ def render_markdown(md: str, img_prefix: str = "") -> str:
             flush_all()
             out.append(f"<h{len(m.group(1))}>{render_inline(m.group(2))}</h{len(m.group(1))}>")
             continue
+        lm = re.match(r"^\[!\[(.*?)\]\((.*?)\)\]\((.*?)\)\s*$", line)
+        if lm:
+            flush_all()
+            alt, src, href = lm.group(1), lm.group(2), lm.group(3)
+            if img_prefix and src.startswith("assets/"):
+                src = img_prefix + src
+            if img_prefix and href.startswith("assets/"):
+                href = img_prefix + href
+            out.append(f'<a href="{href}" target="_blank" rel="noopener"><img src="{src}" alt="{html.escape(alt)}"></a>')
+            continue
         if re.match(r"^!\[(.*?)\]\((.*?)\)\s*$", line):
             flush_all()
             im = re.match(r"^!\[(.*?)\]\((.*?)\)\s*$", line)
