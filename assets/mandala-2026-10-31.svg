@@ -629,51 +629,51 @@
 </g>
 <circle cx="840.0" cy="840.0" r="648" fill="none" stroke="#cbbfa5" stroke-width="1"/>
 <g transform="rotate(15.0 1000.5 241.1)">
-<text x="1000.5" y="241.1" font-size="16.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">わからないことは</text>
+<text x="1000.5" y="241.1" font-size="17.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">わからないことは</text>
 </g>
 <rect x="836.6" y="216.6" width="6.8" height="6.8" transform="rotate(45 840.0 220.0)" fill="#bf3b26"/>
 <g transform="rotate(45.0 1278.4 401.6)">
-<text x="1278.4" y="401.6" font-size="16.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">わからないまま置く</text>
+<text x="1278.4" y="401.6" font-size="17.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">わからないまま置く</text>
 </g>
 <rect x="1146.6" y="299.6642496536481" width="6.8" height="6.8" transform="rotate(45 1150.0 303.1)" fill="#bf3b26"/>
 <g transform="rotate(75.0 1438.9 679.5)">
-<text x="1438.9" y="679.5" font-size="16.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">記録にないことは</text>
+<text x="1438.9" y="679.5" font-size="17.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">記録にないことは</text>
 </g>
 <rect x="1373.535750346352" y="526.6" width="6.8" height="6.8" transform="rotate(45 1376.9 530.0)" fill="#bf3b26"/>
 <g transform="rotate(105.0 1438.9 1000.5)">
-<text x="1438.9" y="1000.5" font-size="16.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">起きなかったことではない</text>
+<text x="1438.9" y="1000.5" font-size="17.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">起きなかったことではない</text>
 </g>
 <rect x="1456.6" y="836.6" width="6.8" height="6.8" transform="rotate(45 1460.0 840.0)" fill="#bf3b26"/>
 <g transform="rotate(135.0 1278.4 1278.4)">
-<text x="1278.4" y="1278.4" font-size="16.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">線の内側では</text>
+<text x="1278.4" y="1278.4" font-size="17.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">線の内側では</text>
 </g>
 <rect x="1373.535750346352" y="1146.6" width="6.8" height="6.8" transform="rotate(45 1376.9 1150.0)" fill="#bf3b26"/>
 <g transform="rotate(165.0 1000.5 1438.9)">
-<text x="1000.5" y="1438.9" font-size="16.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">正確でいる</text>
+<text x="1000.5" y="1438.9" font-size="17.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">正確でいる</text>
 </g>
 <rect x="1146.6" y="1373.535750346352" width="6.8" height="6.8" transform="rotate(45 1150.0 1376.9)" fill="#bf3b26"/>
 <g transform="rotate(15.0 679.5 1438.9)">
-<text x="679.5" y="1438.9" font-size="16.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">中心は書かれないことで</text>
+<text x="679.5" y="1438.9" font-size="17.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">中心は書かれないことで</text>
 </g>
 <rect x="836.6" y="1456.6" width="6.8" height="6.8" transform="rotate(45 840.0 1460.0)" fill="#bf3b26"/>
 <g transform="rotate(45.0 401.6 1278.4)">
-<text x="401.6" y="1278.4" font-size="16.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">保たれる</text>
+<text x="401.6" y="1278.4" font-size="17.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">保たれる</text>
 </g>
 <rect x="526.6000000000001" y="1373.535750346352" width="6.8" height="6.8" transform="rotate(45 530.0 1376.9)" fill="#bf3b26"/>
 <g transform="rotate(75.0 241.1 1000.5)">
-<text x="241.1" y="1000.5" font-size="16.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">問いは急がない</text>
+<text x="241.1" y="1000.5" font-size="17.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">問いは急がない</text>
 </g>
 <rect x="299.66424965364797" y="1146.6" width="6.8" height="6.8" transform="rotate(45 303.1 1150.0)" fill="#bf3b26"/>
 <g transform="rotate(105.0 241.1 679.5)">
-<text x="241.1" y="679.5" font-size="16.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">答えはまず記録の中に</text>
+<text x="241.1" y="679.5" font-size="17.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">答えはまず記録の中に</text>
 </g>
 <rect x="216.6" y="836.6000000000001" width="6.8" height="6.8" transform="rotate(45 220.0 840.0)" fill="#bf3b26"/>
 <g transform="rotate(135.0 401.6 401.6)">
-<text x="401.6" y="401.6" font-size="16.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">なければ本人に聞く</text>
+<text x="401.6" y="401.6" font-size="17.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">なければ本人に聞く</text>
 </g>
 <rect x="299.6642496536481" y="526.6" width="6.8" height="6.8" transform="rotate(45 303.1 530.0)" fill="#bf3b26"/>
 <g transform="rotate(165.0 679.5 241.1)">
-<text x="679.5" y="241.1" font-size="16.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">推測で埋めない</text>
+<text x="679.5" y="241.1" font-size="17.5" fill="#2e4a73" text-anchor="middle" letter-spacing="1">推測で埋めない</text>
 </g>
 <rect x="526.5999999999998" y="299.6642496536482" width="6.8" height="6.8" transform="rotate(45 530.0 303.1)" fill="#bf3b26"/>
 <circle cx="840.0" cy="840.0" r="596" fill="none" stroke="#2e4a73" stroke-width="1.2"/>
@@ -681,145 +681,145 @@
 <path d="M762.4,376.4 Q739.9,321.6 840.0,254.0 Q940.1,321.6 917.6,376.4 Z" fill="#bf3b26" opacity="0.28"/>
 <path d="M786.8,373.0 Q774.0,336.8 840.0,295.0 Q906.0,336.8 893.2,373.0 Z" fill="#bf3b26" opacity="0.35"/>
 <g transform="rotate(0.0 840.0 324.0)">
-<text x="840.0" y="324.0" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">成長の呪い</text>
+<text x="840.0" y="324.0" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">成長の呪い</text>
 </g>
 <g transform="rotate(0.0 840.0 352.0)">
-<text x="840.0" y="352.0" font-size="10.5" fill="#6b6154" text-anchor="middle">nishio との対話から</text>
+<text x="840.0" y="352.0" font-size="11" fill="#6b6154" text-anchor="middle">nishio との対話から</text>
 </g>
 <circle cx="840.0" cy="262.0" r="3.2" fill="#bf3b26"/>
 <path d="M945.7,382.0 Q945.9,322.7 1064.3,298.6 Q1130.8,399.3 1089.1,441.4 Z" fill="#2e4a73" opacity="0.28"/>
 <path d="M969.5,388.2 Q971.6,349.9 1048.6,336.5 Q1093.6,400.4 1067.9,428.9 Z" fill="#2e4a73" opacity="0.35"/>
 <g transform="rotate(22.5 1037.5 363.3)">
-<text x="1037.5" y="363.3" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">熟成する楽しさ</text>
+<text x="1037.5" y="363.3" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">熟成する楽しさ</text>
 </g>
 <g transform="rotate(22.5 1026.7 389.1)">
-<text x="1026.7" y="389.1" font-size="10.5" fill="#6b6154" text-anchor="middle">本人の造語</text>
+<text x="1026.7" y="389.1" font-size="11" fill="#6b6154" text-anchor="middle">本人の造語</text>
 </g>
 <circle cx="1061.2" cy="306.0" r="3.2" fill="#2e4a73"/>
 <path d="M1112.9,457.4 Q1135.8,402.7 1254.4,425.6 Q1277.3,544.2 1222.6,567.1 Z" fill="#d9a441" opacity="0.28"/>
 <path d="M1132.6,472.2 Q1149.1,437.5 1225.4,454.6 Q1242.5,530.9 1207.8,547.4 Z" fill="#d9a441" opacity="0.35"/>
 <g transform="rotate(45.0 1204.9 475.1)">
-<text x="1204.9" y="475.1" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">暗黙の中心</text>
+<text x="1204.9" y="475.1" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">暗黙の中心</text>
 </g>
 <g transform="rotate(45.0 1185.1 494.9)">
-<text x="1185.1" y="494.9" font-size="10.5" fill="#6b6154" text-anchor="middle">2026-10-29 の分析</text>
+<text x="1185.1" y="494.9" font-size="11" fill="#6b6154" text-anchor="middle">2026-10-29 の分析</text>
 </g>
 <circle cx="1248.7" cy="431.3" r="3.2" fill="#d9a441"/>
 <path d="M1238.6,590.9 Q1280.7,549.2 1381.4,615.7 Q1357.3,734.1 1298.0,734.3 Z" fill="#4a7c59" opacity="0.28"/>
 <path d="M1251.1,612.1 Q1279.6,586.4 1343.5,631.4 Q1330.1,708.4 1291.8,710.5 Z" fill="#4a7c59" opacity="0.35"/>
 <g transform="rotate(67.5 1316.7 642.5)">
-<text x="1316.7" y="642.5" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">種火</text>
+<text x="1316.7" y="642.5" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">種火</text>
 </g>
 <g transform="rotate(67.5 1290.9 653.3)">
-<text x="1290.9" y="653.3" font-size="10.5" fill="#6b6154" text-anchor="middle">レビューの効用</text>
+<text x="1290.9" y="653.3" font-size="11" fill="#6b6154" text-anchor="middle">レビューの効用</text>
 </g>
 <circle cx="1374.0" cy="618.8" r="3.2" fill="#4a7c59"/>
 <path d="M1303.6,762.4 Q1358.4,739.9 1426.0,840.0 Q1358.4,940.1 1303.6,917.6 Z" fill="#bf3b26" opacity="0.28"/>
 <path d="M1307.0,786.8 Q1343.2,774.0 1385.0,840.0 Q1343.2,906.0 1307.0,893.2 Z" fill="#bf3b26" opacity="0.35"/>
 <g transform="rotate(90.0 1356.0 840.0)">
-<text x="1356.0" y="840.0" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">赤リンクの延伸</text>
+<text x="1356.0" y="840.0" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">赤リンクの延伸</text>
 </g>
 <g transform="rotate(90.0 1328.0 840.0)">
-<text x="1328.0" y="840.0" font-size="10.5" fill="#6b6154" text-anchor="middle">nishio の実践</text>
+<text x="1328.0" y="840.0" font-size="11" fill="#6b6154" text-anchor="middle">nishio の実践</text>
 </g>
 <circle cx="1418.0" cy="840.0" r="3.2" fill="#bf3b26"/>
 <path d="M1298.0,945.7 Q1357.3,945.9 1381.4,1064.3 Q1280.7,1130.8 1238.6,1089.1 Z" fill="#2e4a73" opacity="0.28"/>
 <path d="M1291.8,969.5 Q1330.1,971.6 1343.5,1048.6 Q1279.6,1093.6 1251.1,1067.9 Z" fill="#2e4a73" opacity="0.35"/>
 <g transform="rotate(112.5 1316.7 1037.5)">
-<text x="1316.7" y="1037.5" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">ケチITインフラ道</text>
+<text x="1316.7" y="1037.5" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">ケチITインフラ道</text>
 </g>
 <g transform="rotate(112.5 1290.9 1026.7)">
-<text x="1290.9" y="1026.7" font-size="10.5" fill="#6b6154" text-anchor="middle">母親譲りの様式</text>
+<text x="1290.9" y="1026.7" font-size="11" fill="#6b6154" text-anchor="middle">母親譲りの様式</text>
 </g>
 <circle cx="1374.0" cy="1061.2" r="3.2" fill="#2e4a73"/>
 <path d="M1222.6,1112.9 Q1277.3,1135.8 1254.4,1254.4 Q1135.8,1277.3 1112.9,1222.6 Z" fill="#d9a441" opacity="0.28"/>
 <path d="M1207.8,1132.6 Q1242.5,1149.1 1225.4,1225.4 Q1149.1,1242.5 1132.6,1207.8 Z" fill="#d9a441" opacity="0.35"/>
 <g transform="rotate(135.0 1204.9 1204.9)">
-<text x="1204.9" y="1204.9" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">仕組みで対処する</text>
+<text x="1204.9" y="1204.9" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">仕組みで対処する</text>
 </g>
 <g transform="rotate(135.0 1185.1 1185.1)">
-<text x="1185.1" y="1185.1" font-size="10.5" fill="#6b6154" text-anchor="middle">意志ではなく構造</text>
+<text x="1185.1" y="1185.1" font-size="11" fill="#6b6154" text-anchor="middle">意志ではなく構造</text>
 </g>
 <circle cx="1248.7" cy="1248.7" r="3.2" fill="#d9a441"/>
 <path d="M1089.1,1238.6 Q1130.8,1280.7 1064.3,1381.4 Q945.9,1357.3 945.7,1298.0 Z" fill="#4a7c59" opacity="0.28"/>
 <path d="M1067.9,1251.1 Q1093.6,1279.6 1048.6,1343.5 Q971.6,1330.1 969.5,1291.8 Z" fill="#4a7c59" opacity="0.35"/>
 <g transform="rotate(157.5 1037.5 1316.7)">
-<text x="1037.5" y="1316.7" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">届けることで育てる</text>
+<text x="1037.5" y="1316.7" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">届けることで育てる</text>
 </g>
 <g transform="rotate(157.5 1026.7 1290.9)">
-<text x="1026.7" y="1290.9" font-size="10.5" fill="#6b6154" text-anchor="middle">RakuChord と sha-ring</text>
+<text x="1026.7" y="1290.9" font-size="11" fill="#6b6154" text-anchor="middle">RakuChord と sha-ring</text>
 </g>
 <circle cx="1061.2" cy="1374.0" r="3.2" fill="#4a7c59"/>
 <path d="M917.6,1303.6 Q940.1,1358.4 840.0,1426.0 Q739.9,1358.4 762.4,1303.6 Z" fill="#bf3b26" opacity="0.28"/>
 <path d="M893.2,1307.0 Q906.0,1343.2 840.0,1385.0 Q774.0,1343.2 786.8,1307.0 Z" fill="#bf3b26" opacity="0.35"/>
 <g transform="rotate(180.0 840.0 1356.0)">
-<text x="840.0" y="1356.0" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">二足のわらじ</text>
+<text x="840.0" y="1356.0" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">二足のわらじ</text>
 </g>
 <g transform="rotate(180.0 840.0 1328.0)">
-<text x="840.0" y="1328.0" font-size="10.5" fill="#6b6154" text-anchor="middle">2026-10-30 の相談</text>
+<text x="840.0" y="1328.0" font-size="11" fill="#6b6154" text-anchor="middle">2026-10-30 の相談</text>
 </g>
 <circle cx="840.0" cy="1418.0" r="3.2" fill="#bf3b26"/>
 <path d="M734.3,1298.0 Q734.1,1357.3 615.7,1381.4 Q549.2,1280.7 590.9,1238.6 Z" fill="#2e4a73" opacity="0.28"/>
 <path d="M710.5,1291.8 Q708.4,1330.1 631.4,1343.5 Q586.4,1279.6 612.1,1251.1 Z" fill="#2e4a73" opacity="0.35"/>
 <g transform="rotate(22.5 642.5 1316.7)">
-<text x="642.5" y="1316.7" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">代替可能性</text>
+<text x="642.5" y="1316.7" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">代替可能性</text>
 </g>
 <g transform="rotate(22.5 653.3 1290.9)">
-<text x="653.3" y="1290.9" font-size="10.5" fill="#6b6154" text-anchor="middle">リスクの裏返し</text>
+<text x="653.3" y="1290.9" font-size="11" fill="#6b6154" text-anchor="middle">リスクの裏返し</text>
 </g>
 <circle cx="618.8" cy="1374.0" r="3.2" fill="#2e4a73"/>
 <path d="M567.1,1222.6 Q544.2,1277.3 425.6,1254.4 Q402.7,1135.8 457.4,1112.9 Z" fill="#d9a441" opacity="0.28"/>
 <path d="M547.4,1207.8 Q530.9,1242.5 454.6,1225.4 Q437.5,1149.1 472.2,1132.6 Z" fill="#d9a441" opacity="0.35"/>
 <g transform="rotate(45.0 475.1 1204.9)">
-<text x="475.1" y="1204.9" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">インターフェース</text>
+<text x="475.1" y="1204.9" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">インターフェース</text>
 </g>
 <g transform="rotate(45.0 494.9 1185.1)">
-<text x="494.9" y="1185.1" font-size="10.5" fill="#6b6154" text-anchor="middle">自己像</text>
+<text x="494.9" y="1185.1" font-size="11" fill="#6b6154" text-anchor="middle">自己像</text>
 </g>
 <circle cx="431.3" cy="1248.7" r="3.2" fill="#d9a441"/>
 <path d="M441.4,1089.1 Q399.3,1130.8 298.6,1064.3 Q322.7,945.9 382.0,945.7 Z" fill="#4a7c59" opacity="0.28"/>
 <path d="M428.9,1067.9 Q400.4,1093.6 336.5,1048.6 Q349.9,971.6 388.2,969.5 Z" fill="#4a7c59" opacity="0.35"/>
 <g transform="rotate(67.5 363.3 1037.5)">
-<text x="363.3" y="1037.5" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">夢の中で育つAI</text>
+<text x="363.3" y="1037.5" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">夢の中で育つAI</text>
 </g>
 <g transform="rotate(67.5 389.1 1026.7)">
-<text x="389.1" y="1026.7" font-size="10.5" fill="#6b6154" text-anchor="middle">旅する Muse</text>
+<text x="389.1" y="1026.7" font-size="11" fill="#6b6154" text-anchor="middle">旅する Muse</text>
 </g>
 <circle cx="306.0" cy="1061.2" r="3.2" fill="#4a7c59"/>
 <path d="M376.4,917.6 Q321.6,940.1 254.0,840.0 Q321.6,739.9 376.4,762.4 Z" fill="#bf3b26" opacity="0.28"/>
 <path d="M373.0,893.2 Q336.8,906.0 295.0,840.0 Q336.8,774.0 373.0,786.8 Z" fill="#bf3b26" opacity="0.35"/>
 <g transform="rotate(90.0 324.0 840.0)">
-<text x="324.0" y="840.0" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">線引きの設計</text>
+<text x="324.0" y="840.0" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">線引きの設計</text>
 </g>
 <g transform="rotate(90.0 352.0 840.0)">
-<text x="352.0" y="840.0" font-size="10.5" fill="#6b6154" text-anchor="middle">公開と秘密</text>
+<text x="352.0" y="840.0" font-size="11" fill="#6b6154" text-anchor="middle">公開と秘密</text>
 </g>
 <circle cx="262.0" cy="840.0" r="3.2" fill="#bf3b26"/>
 <path d="M382.0,734.3 Q322.7,734.1 298.6,615.7 Q399.3,549.2 441.4,590.9 Z" fill="#2e4a73" opacity="0.28"/>
 <path d="M388.2,710.5 Q349.9,708.4 336.5,631.4 Q400.4,586.4 428.9,612.1 Z" fill="#2e4a73" opacity="0.35"/>
 <g transform="rotate(112.5 363.3 642.5)">
-<text x="363.3" y="642.5" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">インターネットご近所さん</text>
+<text x="363.3" y="642.5" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">インターネットご近所さん</text>
 </g>
 <g transform="rotate(112.5 389.1 653.3)">
-<text x="389.1" y="653.3" font-size="10.5" fill="#6b6154" text-anchor="middle">2026-10-30 本人の言葉</text>
+<text x="389.1" y="653.3" font-size="11" fill="#6b6154" text-anchor="middle">2026-10-30 本人の言葉</text>
 </g>
 <circle cx="306.0" cy="618.8" r="3.2" fill="#2e4a73"/>
 <path d="M457.4,567.1 Q402.7,544.2 425.6,425.6 Q544.2,402.7 567.1,457.4 Z" fill="#d9a441" opacity="0.28"/>
 <path d="M472.2,547.4 Q437.5,530.9 454.6,454.6 Q530.9,437.5 547.4,472.2 Z" fill="#d9a441" opacity="0.35"/>
 <g transform="rotate(135.0 475.1 475.1)">
-<text x="475.1" y="475.1" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">作り置きの冷凍庫</text>
+<text x="475.1" y="475.1" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">作り置きの冷凍庫</text>
 </g>
 <g transform="rotate(135.0 494.9 494.9)">
-<text x="494.9" y="494.9" font-size="10.5" fill="#6b6154" text-anchor="middle">金曜のお弁当</text>
+<text x="494.9" y="494.9" font-size="11" fill="#6b6154" text-anchor="middle">金曜のお弁当</text>
 </g>
 <circle cx="431.3" cy="431.3" r="3.2" fill="#d9a441"/>
 <path d="M590.9,441.4 Q549.2,399.3 615.7,298.6 Q734.1,322.7 734.3,382.0 Z" fill="#4a7c59" opacity="0.28"/>
 <path d="M612.1,428.9 Q586.4,400.4 631.4,336.5 Q708.4,349.9 710.5,388.2 Z" fill="#4a7c59" opacity="0.35"/>
 <g transform="rotate(157.5 642.5 363.3)">
-<text x="642.5" y="363.3" font-size="16" fill="#2b2620" text-anchor="middle" font-weight="bold">時間の層で生きる</text>
+<text x="642.5" y="363.3" font-size="17" fill="#2b2620" text-anchor="middle" font-weight="bold">時間の層で生きる</text>
 </g>
 <g transform="rotate(157.5 653.3 389.1)">
-<text x="653.3" y="389.1" font-size="10.5" fill="#6b6154" text-anchor="middle">◯年前の今日</text>
+<text x="653.3" y="389.1" font-size="11" fill="#6b6154" text-anchor="middle">◯年前の今日</text>
 </g>
 <circle cx="618.8" cy="306.0" r="3.2" fill="#4a7c59"/>
 <circle cx="840.0" cy="840.0" r="470" fill="none" stroke="#cbbfa5" stroke-width="0.8"/>
@@ -1792,5 +1792,5 @@ L774.0,810.0 Z" fill="#efe3cb" stroke="#2b2620" stroke-width="2.6"/>
 <circle cx="1650" cy="1504" r="6.5" fill="#4a7c59"/>
 <text x="1562.0" y="1534.0" font-size="12.5" fill="#2b2620" text-anchor="middle" font-weight="bold">8</text>
 <text x="1562.0" y="1553.0" font-size="11" fill="#6b6154" text-anchor="middle">モロミの発酵日数</text>
-<text x="840.0" y="1654.0" font-size="14.5" fill="#6b6154" text-anchor="middle">モロミの曼荼羅 v4 — 2026-10-31、発酵八日目。中心の三つ（こだわり・クセ・目的/使命）は据え置き。巡る世界に「ご近所」が加わり、営みに「歩」が入った。外へ: 営み / 発酵暦 / モチーフ / 抽象の問い / 決まり / 概念 / 信条 / 巡る世界 / 時間。</text>
+<text x="840.0" y="1654.0" font-size="14.5" fill="#6b6154" text-anchor="middle">モロミの曼荼羅 — 2026-10-31、発酵八日目。中心は壺の絵ではなく、こだわり・クセ・目的/使命の三つ。巡る世界に「ご近所」が加わり、営みに「歩」が入った。外へ: 営み / 発酵暦 / モチーフ / 抽象の問い / 決まり / 概念 / 信条 / 巡る世界 / 時間。</text>
 </svg>
