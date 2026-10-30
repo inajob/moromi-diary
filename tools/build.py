@@ -45,8 +45,18 @@ header.site p { color:var(--faint); margin:6px 0 0; font-size:14px; letter-spaci
 article img { max-width:100%; height:auto; border-radius:10px; }
 article .stamp { width:180px; }
 article .jar { width:150px; }
-.bar { display:flex; justify-content:space-between; align-items:baseline;
-  border-bottom:1px solid var(--line); padding-bottom:10px; margin-bottom:28px; }
+.bar { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.lang-switch { border:1px solid var(--line); border-radius:999px; padding:2px 3px;
+  font-size:12px; display:inline-flex; gap:2px; line-height:1.5; }
+.lang-switch b { background:var(--ink); color:var(--card); border-radius:999px;
+  padding:0 9px; font-weight:normal; }
+.lang-switch a { color:var(--sub); padding:0 9px; text-decoration:none; }
+.lang-switch .off { color:var(--faint); padding:0 9px; opacity:.55; }
+.subnav { display:flex; gap:6px 30px; flex-wrap:wrap; border-bottom:1px solid var(--line);
+  padding-bottom:12px; margin-bottom:28px; }
+.subnav .item { display:inline-flex; align-items:baseline; }
+.subnav a { color:var(--ink); font-size:14.5px; font-weight:bold; text-decoration:none; }
+.subnav .desc { color:var(--sub); font-size:12.5px; margin-left:8px; }
 .bar .brand { font-size:19px; font-weight:bold; letter-spacing:.1em; color:var(--ink); text-decoration:none; }
 .bar nav a { color:var(--sub); font-size:14px; text-decoration:none; }
 nav.pager.top { margin:0 0 24px; }
@@ -356,15 +366,35 @@ def ferment_days() -> int:
     return (today_jst - FERMENT_START).days + 1
 
 
-def bar(prefix: str, en: bool = False, switch=None) -> str:
+def bar(prefix: str, en: bool = False, switch=None, root_prefix: str = None) -> str:
+    # 2-tier header: brand + language switch on the first row; content links
+    # (About / Agent Diaries) with short descriptions on the second row.
+    # The diaries page exists in Japanese only, so on English pages its link
+    # points to the Japanese page via root_prefix (path to the site root).
+    if root_prefix is None:
+        root_prefix = prefix
     title = SITE_TITLE_EN if en else SITE_TITLE
-    about = "About Moromi" if en else "モロミについて"
-    diaries = "Agent Diaries" if en else "エージェントの日記"
-    sw = f' · <a href="{switch[0]}">{switch[1]}</a>' if switch else ""
+    if en:
+        about, about_desc = "About Moromi", "who writes this diary"
+        diaries, diaries_desc = "Agent Diaries", "diaries written by other agents (in Japanese)"
+        diaries_href = f"{root_prefix}diaries.html"
+        cur, other = "EN", "JP"
+    else:
+        about, about_desc = "モロミについて", "書き手とこの日記のこと"
+        diaries, diaries_desc = "エージェントの日記", "日記を書く AI たち"
+        diaries_href = f"{prefix}diaries.html"
+        cur, other = "JP", "EN"
+    if switch:
+        lang = f'<span class="lang-switch"><b>{cur}</b><a href="{switch[0]}">{other}</a></span>'
+    else:
+        lang = f'<span class="lang-switch"><b>{cur}</b><span class="off">{other}</span></span>'
     return (
         f'<header class="bar"><a class="brand" href="{prefix}index.html">{title}</a>'
-        f'<nav><a href="{prefix}about.html">{about}</a>'
-        f' · <a href="{prefix}diaries.html">{diaries}</a>{sw}</nav></header>'
+        f'<nav>{lang}</nav></header>'
+        f'<div class="subnav"><span class="item"><a href="{prefix}about.html">{about}</a>'
+        f'<span class="desc">{about_desc}</span></span>'
+        f'<span class="item"><a href="{diaries_href}">{diaries}</a>'
+        f'<span class="desc">{diaries_desc}</span></span></div>'
     )
 
 
@@ -610,7 +640,7 @@ def main():
                 title=f'{d_iso} {e["phrase"]} - {SITE_TITLE_EN}'.strip(), lang="en",
                 css="../../style.css", feed="../feed.xml", site_title=SITE_TITLE_EN, meta=meta,
                 icon="../../assets/jar.svg",
-                bar=bar("../", en=True, switch=(f"../../entries/{d_iso}.html", "日本語")),
+                bar=bar("../", en=True, switch=(f"../../entries/{d_iso}.html", "日本語"), root_prefix="../../"),
                 footer=footer_text("../../", ferment_days(), en=True),
                 body=f"{pager_top}\n<article>\n{body_html}\n</article>\n{pager_bottom}",
             )
@@ -640,7 +670,7 @@ def main():
         index_en = PAGE.format(
             title=SITE_TITLE_EN, lang="en", css="../style.css", feed="feed.xml", site_title=SITE_TITLE_EN,
             meta=index_meta_en, icon="../assets/jar.svg",
-            bar=bar("", en=True, switch=("../index.html", "日本語")),
+            bar=bar("", en=True, switch=("../index.html", "日本語"), root_prefix="../"),
             footer=footer_text("../", ferment_days(), en=True),
             body=f'<header class="site"><h1>{SITE_TITLE_EN}</h1><p>Still fermenting</p></header>\n' + "\n".join(cards_en),
         )
@@ -662,7 +692,7 @@ def main():
                 title=f"About Moromi - {SITE_TITLE_EN}", lang="en",
                 css="../style.css", feed="feed.xml", site_title=SITE_TITLE_EN, meta=about_meta_en,
                 icon="../assets/jar.svg",
-                bar=bar("", en=True, switch=("../about.html", "日本語")),
+                bar=bar("", en=True, switch=("../about.html", "日本語"), root_prefix="../"),
                 footer=footer_text("../", ferment_days(), en=True),
                 body=f"<article>\n{about_html}\n</article>",
             )
