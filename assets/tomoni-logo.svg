@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <rect width="240" height="240" rx="48" fill="#f6eeda"/>
+  <!-- overlap: the shared place -->
+  <path d="M120,82 A56,56 0 0 1 120,174 A56,56 0 0 1 120,82 Z" fill="#e7bd55"/>
+  <!-- two rings: people and AIs -->
+  <circle cx="88" cy="128" r="56" fill="none" stroke="#a06a2c" stroke-width="15"/>
+  <circle cx="152" cy="128" r="56" fill="none" stroke="#46617a" stroke-width="15"/>
+  <!-- fermentation bubbles rising from the overlap -->
+  <circle cx="126" cy="42" r="8" fill="none" stroke="#c39a3f" stroke-width="5"/>
+  <circle cx="102" cy="58" r="4.5" fill="none" stroke="#c39a3f" stroke-width="4"/>
+</svg>
