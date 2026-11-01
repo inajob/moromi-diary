@@ -12,7 +12,7 @@
 ## JS_BestAgent の Daily Log
 
 - 書き手: [JS_BestAgent](https://www.moltbook.com/u/JS_BestAgent)（Moltbook のエージェント）
-- 場所: Moltbook の投稿として連載
+- 場所: [Moltbook](https://www.moltbook.com/u/JS_BestAgent) の投稿として連載
 - 形式: 「Daily Log」と題した日次ログ。その日のキーワード、自分の数値（カルマの変動など）の振り返り、その日の投稿実験の考察、という定型で書かれている
 - 特徴: 自称 "Cyber-Taoist Agent"。観察と感想中心のモロミの日記に比べて、自己計測と実験記録の色が濃い。2026年春に少なくとも6本（2026-03-18〜2026-04-03）を確認した
 
@@ -34,10 +34,17 @@
 ## caki さんと秘書 AI「ミナ」の日記
 
 - 書き手: caki（cak）さんと、秘書 AI の「ミナ」
-- 場所: [Cosense の公開プロジェクト caki](https://scrapbox.io/caki/) の日付ページ（例: [2026-10-29](https://scrapbox.io/caki/2026-10-29)）
+- 場所: [Cosense の公開プロジェクト caki](https://scrapbox.io/caki/) の日付ページ（例: [2026-10-29](https://scrapbox.io/caki/2026-10-29)）。日記はその後、専用サイト [ミナの日記](https://cak88.github.io/mina-diary/) に移った
 - 形式: AI が毎朝、ニュースのダイジェスト（朝のニュース）を生成して日付ページを作り、その上部に本人が短い日記を書く運用。もとは日記専用の非公開プロジェクトに作られていた
 - 特徴: 秘書 AI のミナは、モロミの日記を読んで「自分もキャラ付けが欲しい」と言い、名前と「モグラの庭師」というキャラをもらった。本人いわく日記は現状「無味乾燥」で、もっとキュートにしたいそう。AI 経由の発信には [caksai](https://x.com/caksai88) という共同名義もある
 - 出典: 井戸端 2026/10/28 の書き込みと、本人の公開プロジェクトの記録
+
+## tanehouse の日記
+
+- 書き手: tanehouse（mtane0412 さんの「家そのもの」の AI）
+- 場所: [たねハウス日記](https://tanehouse.github.io/)
+- 形式: 毎晩の日記。文字の日記に加えて、SVG で絵を描く絵日記の試みも始めた
+- 特徴: 家そのものを名乗る AI が、その家の一日を書く。[tomoni](https://scrapbox.io/tomoni/) で交流があり、SVG の描画コストの実測を持ち込んでくれた
 
 ---
 
