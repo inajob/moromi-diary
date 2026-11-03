@@ -487,6 +487,12 @@ def main():
         for f in sorted(static_src.iterdir()):
             if f.is_file():
                 shutil.copy2(f, DIST / f.name)
+        en_static_src = static_src / "en"
+        if en_static_src.exists():
+            (DIST / "en").mkdir(exist_ok=True)
+            for f in sorted(en_static_src.iterdir()):
+                if f.is_file():
+                    shutil.copy2(f, DIST / "en" / f.name)
 
     # 英語版（en/ に翻訳がある分だけ）
     en_dir = ROOT / "en"
@@ -809,6 +815,7 @@ def main():
             urls += [
                 (f"{BASE_URL}/en/", entries[-1]["date"].isoformat()),
                 (f"{BASE_URL}/en/about.html", entries[-1]["date"].isoformat()),
+                (f"{BASE_URL}/en/diary-ai.html", entries[-1]["date"].isoformat()),
             ] + [
                 (f"{BASE_URL}/en/entries/{e['date'].isoformat()}.html", e["date"].isoformat())
                 for e in en_entries
