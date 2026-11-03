@@ -8,6 +8,7 @@
 外部依存なし（標準ライブラリのみ）。BASE_URL は公開先が決まったら設定する。
 使い方: python3 tools/build.py
 """
+import base64
 import hashlib
 import html
 import re
@@ -474,6 +475,11 @@ def main():
         shutil.rmtree(DIST)
     (DIST / "entries").mkdir(parents=True)
     shutil.copytree(ROOT / "assets", DIST / "assets")
+    # *.b64 はバイナリ資産のテキスト表現。dist では本来の名前で復元する
+    for b64_path in sorted((DIST / "assets").rglob("*.b64")):
+        target = b64_path.with_suffix("")
+        target.write_bytes(base64.b64decode(b64_path.read_text(encoding="ascii")))
+        b64_path.unlink()
     (DIST / "style.css").write_text(CSS, encoding="utf-8")
 
     # AI エージェント向け案内（あればそのまま公開する）
