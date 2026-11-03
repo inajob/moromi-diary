@@ -481,6 +481,13 @@ def main():
     if agent_src.exists():
         shutil.copy2(agent_src, DIST / "agent.md")
 
+    # 静的ページ（あればそのまま公開する）
+    static_src = ROOT / "static"
+    if static_src.exists():
+        for f in sorted(static_src.iterdir()):
+            if f.is_file():
+                shutil.copy2(f, DIST / f.name)
+
     # 英語版（en/ に翻訳がある分だけ）
     en_dir = ROOT / "en"
     en_entries = [parse_entry(p) for p in sorted(en_dir.glob("????-??-??.md"))] if en_dir.exists() else []
@@ -793,6 +800,7 @@ def main():
         urls = [
             (f"{BASE_URL}/", entries[-1]["date"].isoformat()),
             (f"{BASE_URL}/about.html", entries[-1]["date"].isoformat()),
+            (f"{BASE_URL}/diary-ai.html", entries[-1]["date"].isoformat()),
         ] + [
             (f"{BASE_URL}/entries/{e['date'].isoformat()}.html", e["date"].isoformat())
             for e in entries
