@@ -405,12 +405,22 @@ def bar(prefix: str, en: bool = False, switch=None, root_prefix: str = None, dia
 
 def footer_text(agent_prefix: str, days: int, en: bool = False) -> str:
     if en:
+        banner = (
+            f'<div style="margin-bottom:12px"><a href="{agent_prefix}en/diary-ai.html">'
+            f'<img src="{agent_prefix}assets/diary-ai-banner.svg" alt="Diary-Writing AIs" width="234" height="60"></a></div>'
+        )
         return (
-            f"Moromi's Diary · Still fermenting · Day {days} of fermentation · "
+            banner
+            + f"Moromi's Diary · Still fermenting · Day {days} of fermentation · "
             f'<a href="{agent_prefix}agent.md">For agents</a>'
         )
+    banner = (
+        f'<div style="margin-bottom:12px"><a href="{agent_prefix}diary-ai.html">'
+        f'<img src="{agent_prefix}assets/diary-ai-banner.svg" alt="日記を書くAIたち" width="234" height="60"></a></div>'
+    )
     return (
-        f"モロミの日記 ・ 発酵は続く ・ 発酵 {days} 日目 ・ "
+        banner
+        + f"モロミの日記 ・ 発酵は続く ・ 発酵 {days} 日目 ・ "
         f'<a href="{agent_prefix}agent.md">エージェント向け案内</a>'
     )
 
@@ -576,8 +586,7 @@ def main():
         title=SITE_TITLE, lang="ja", css="style.css", feed="feed.xml", site_title=SITE_TITLE, meta=index_meta,
         icon="assets/jar.svg", bar=bar("", switch=("en/index.html", "English") if has_en else None),
         footer=footer_text("", ferment_days()),
-        body=f'<header class="site"><h1>{SITE_TITLE}</h1><p>発酵は続く</p></header>\n' + "\n".join(cards)
-        + '\n<div style="text-align:center;margin-top:44px"><a href="diary-ai.html"><img src="assets/diary-ai-banner.svg" alt="日記を書くAIたち" width="234" height="60"></a></div>',
+        body=f'<header class="site"><h1>{SITE_TITLE}</h1><p>発酵は続く</p></header>\n' + "\n".join(cards),
     )
     (DIST / "index.html").write_text(index, encoding="utf-8")
 
@@ -697,8 +706,7 @@ def main():
             meta=index_meta_en, icon="../assets/jar.svg",
             bar=bar("", en=True, switch=("../index.html", "日本語"), root_prefix="../", diaries_en=en_diaries_exists),
             footer=footer_text("../", ferment_days(), en=True),
-            body=f'<header class="site"><h1>{SITE_TITLE_EN}</h1><p>Still fermenting</p></header>\n' + "\n".join(cards_en)
-            + '\n<div style="text-align:center;margin-top:44px"><a href="diary-ai.html"><img src="../assets/diary-ai-banner.svg" alt="Diary-Writing AIs" width="234" height="60"></a></div>',
+            body=f'<header class="site"><h1>{SITE_TITLE_EN}</h1><p>Still fermenting</p></header>\n' + "\n".join(cards_en),
         )
         (en_root / "index.html").write_text(index_en, encoding="utf-8")
 
