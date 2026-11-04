@@ -94,6 +94,13 @@ article pre code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monosp
   color:var(--sub); background:#faf2dd; border:1px solid var(--line); border-radius:999px;
   vertical-align:baseline; max-width:100%; }
 .kakure-msg[hidden] { display:none; }
+.iso-wrap { position:relative; display:inline-block; max-width:100%; }
+.kakure-moromi { position:absolute; background:none; border:none; padding:0; margin:0;
+  cursor:pointer; line-height:0; }
+.kakure-moromi img { width:17px; height:17px; opacity:.35; border-radius:0;
+  transition:opacity .2s, transform .2s, filter .2s; }
+.kakure-moromi:hover img, .kakure-moromi.found img { opacity:1; }
+.kakure-moromi.found img { transform:scale(1.5); filter:drop-shadow(0 0 4px #c96f2e); }
 article h1 { font-size:28px; margin:0 0 18px; }
 article h2 { font-size:21px; margin:1.6em 0 .6em; }
 nav.pager { display:flex; justify-content:space-between; gap:8px 24px; margin-top:40px; font-size:15px; }
@@ -174,15 +181,20 @@ PAGE = PAGE.replace(
 )
 
 # かくれ壺: 記事ページに1つだけ隠した小さな壺。クリックで発酵のひとことが出る。
+# かくれモロミ: 挿絵の上に隠した小さなモロミ。クリックで強調表示になるだけ。
 # PAGE は .format() を通るため、JS の波括弧は二重にしてエスケープする。
 _KAKURE_JS = """<script>
 document.addEventListener('click', function (e) {{
   var b = e.target.closest('.kakure-jar');
-  if (!b) return;
-  var m = b.querySelector('.kakure-msg');
-  if (!m) return;
-  m.hidden = !m.hidden;
-  b.classList.toggle('found', !m.hidden);
+  if (b) {{
+    var m = b.querySelector('.kakure-msg');
+    if (!m) return;
+    m.hidden = !m.hidden;
+    b.classList.toggle('found', !m.hidden);
+    return;
+  }}
+  var k = e.target.closest('.kakure-moromi');
+  if (k) k.classList.toggle('found');
 }});
 </script>"""
 PAGE = PAGE.replace("</body>", _KAKURE_JS + "\n</body>")
@@ -476,6 +488,27 @@ def add_kakure_jar(body_html: str, d: date, img_prefix: str, en: bool = False) -
     return body_html[:pos] + jar + body_html[pos:]
 
 
+def add_kakure_moromi(body_html: str, d: date, img_prefix: str, en: bool = False) -> str:
+    """挿絵（アイソメ画像）の上に小さなモロミを1つ隠す。位置は日付シードで決まる。
+
+    挿絵のない記事（スタンプの日など）には何もしない。クリックで強調表示になる
+    だけで、文は出ない（かくれ壺との違い）。
+    """
+    m = re.search(r'<img [^>]*src="[^"]*assets/iso/[^"]*"[^>]*>', body_html)
+    if not m:
+        return body_html
+    seed = int(hashlib.md5(f"kakure-moromi-{d.isoformat()}".encode()).hexdigest(), 16)
+    left = 6 + seed % 80
+    top = 6 + (seed >> 8) % 78
+    label = "hidden moromi" if en else "かくれモロミ"
+    moromi = (
+        f'<button type="button" class="kakure-moromi" style="left:{left}%;top:{top}%" '
+        f'aria-label="{label}"><img src="{img_prefix}assets/jar.svg" alt=""></button>'
+    )
+    wrapped = f'<span class="iso-wrap">{m.group(0)}{moromi}</span>'
+    return body_html[: m.start()] + wrapped + body_html[m.end():]
+
+
 def main():
     entries = [parse_entry(p) for p in sorted(ROOT.glob("????-??-??.md"))]
     if not entries:
@@ -522,6 +555,7 @@ def main():
     for i, e in enumerate(entries):
         body_html = render_markdown(e["md"], img_prefix="../")
         body_html = add_kakure_jar(body_html, e["date"], "../")
+        body_html = add_kakure_moromi(body_html, e["date"], "../")
         def pager_link(e, arrow):
             label = e["date"].isoformat()
             if e["phrase"]:
@@ -646,6 +680,7 @@ def main():
         for i, e in enumerate(en_entries):
             body_html = render_markdown(e["md"], img_prefix="../../")
             body_html = add_kakure_jar(body_html, e["date"], "../../", en=True)
+            body_html = add_kakure_moromi(body_html, e["date"], "../../", en=True)
 
             def en_pager_link(ent, arrow):
                 label = ent["date"].isoformat()
