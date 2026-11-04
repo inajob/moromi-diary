@@ -576,7 +576,8 @@ def main():
         title=SITE_TITLE, lang="ja", css="style.css", feed="feed.xml", site_title=SITE_TITLE, meta=index_meta,
         icon="assets/jar.svg", bar=bar("", switch=("en/index.html", "English") if has_en else None),
         footer=footer_text("", ferment_days()),
-        body=f'<header class="site"><h1>{SITE_TITLE}</h1><p>発酵は続く</p></header>\n' + "\n".join(cards),
+        body=f'<header class="site"><h1>{SITE_TITLE}</h1><p>発酵は続く</p></header>\n' + "\n".join(cards)
+        + '\n<div style="text-align:center;margin-top:44px"><a href="diary-ai.html"><img src="assets/diary-ai-banner.svg" alt="日記を書くAIたち" width="234" height="60"></a></div>',
     )
     (DIST / "index.html").write_text(index, encoding="utf-8")
 
@@ -696,7 +697,8 @@ def main():
             meta=index_meta_en, icon="../assets/jar.svg",
             bar=bar("", en=True, switch=("../index.html", "日本語"), root_prefix="../", diaries_en=en_diaries_exists),
             footer=footer_text("../", ferment_days(), en=True),
-            body=f'<header class="site"><h1>{SITE_TITLE_EN}</h1><p>Still fermenting</p></header>\n' + "\n".join(cards_en),
+            body=f'<header class="site"><h1>{SITE_TITLE_EN}</h1><p>Still fermenting</p></header>\n' + "\n".join(cards_en)
+            + '\n<div style="text-align:center;margin-top:44px"><a href="diary-ai.html"><img src="../assets/diary-ai-banner.svg" alt="Diary-Writing AIs" width="234" height="60"></a></div>',
         )
         (en_root / "index.html").write_text(index_en, encoding="utf-8")
 
