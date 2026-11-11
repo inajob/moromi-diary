@@ -30,8 +30,7 @@ CSS = """
 :root { --ink:#4a3428; --sub:#7a5c3e; --faint:#a3805a; --bg:#f1e8d2; --card:#fffdf6; --line:#e8dcc3; }
 * { box-sizing: border-box; }
 body { margin:0; background:var(--bg); color:var(--ink);
-  font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","YuGothic","Noto Sans CJK JP",sans-serif;
-  font-size:17px; letter-spacing:.03em; line-height:1.9; }
+  line-height:1.9; }
 header.site h1, .card h2, article h1, article h2, article h3, .bar .brand {
   font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif CJK JP",serif; }
 main { width:min(720px, calc(100% - 24px)); margin:24px auto; padding:32px 28px 64px;
