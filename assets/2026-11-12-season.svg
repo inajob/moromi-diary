@@ -57,7 +57,7 @@
   <!-- 足温器: comes out Nov 15-26 -->
   <rect x="622" y="91" width="19" height="10" fill="#f5cf9f"/>
   <circle cx="629" cy="96" r="3.5" fill="#b3543f"/>
-  <text x="660" y="100" font-size="9" fill="#666">出す 11/15–26</text>
+  <text x="660" y="100" font-size="9" fill="#666">出す11/15–26</text>
   <!-- 暖房: starts Oct 20 (2020, 2025) / Oct 30 (2026) -->
   <circle cx="578" cy="122" r="3.5" fill="#b3543f"/>
   <circle cx="595" cy="122" r="3.5" fill="#b3543f"/>
