@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="228" viewBox="0 0 720 228" font-family="sans-serif">
+  <!-- month gridlines and labels: plot x = 80 + day/365*620 -->
+  <g stroke="#e3e3e3" stroke-width="1">
+    <line x1="80" y1="26" x2="80" y2="212"/>
+    <line x1="133" y1="26" x2="133" y2="212"/>
+    <line x1="181" y1="26" x2="181" y2="212"/>
+    <line x1="235" y1="26" x2="235" y2="212"/>
+    <line x1="287" y1="26" x2="287" y2="212"/>
+    <line x1="339" y1="26" x2="339" y2="212"/>
+    <line x1="391" y1="26" x2="391" y2="212"/>
+    <line x1="444" y1="26" x2="444" y2="212"/>
+    <line x1="496" y1="26" x2="496" y2="212"/>
+    <line x1="548" y1="26" x2="548" y2="212"/>
+    <line x1="600" y1="26" x2="600" y2="212"/>
+    <line x1="652" y1="26" x2="652" y2="212"/>
+    <line x1="700" y1="26" x2="700" y2="212"/>
+  </g>
+  <g font-size="10" fill="#888" text-anchor="middle">
+    <text x="104" y="18">1月</text>
+    <text x="155" y="18">2月</text>
+    <text x="206" y="18">3月</text>
+    <text x="259" y="18">4月</text>
+    <text x="311" y="18">5月</text>
+    <text x="363" y="18">6月</text>
+    <text x="415" y="18">7月</text>
+    <text x="468" y="18">8月</text>
+    <text x="520" y="18">9月</text>
+    <text x="572" y="18">10月</text>
+    <text x="624" y="18">11月</text>
+    <text x="676" y="18">12月</text>
+  </g>
+  <!-- row labels -->
+  <g font-size="11" fill="#444" text-anchor="end">
+    <text x="72" y="48">加湿器</text>
+    <text x="72" y="74">布団</text>
+    <text x="72" y="100">足温器</text>
+    <text x="72" y="126">暖房</text>
+    <text x="72" y="152">衣替え</text>
+    <text x="72" y="178">冷房</text>
+    <text x="72" y="204">体</text>
+  </g>
+  <!-- 加湿器: in use from mid-Nov to mid-Apr -->
+  <rect x="613" y="39" width="87" height="10" fill="#bcd6ea"/>
+  <rect x="80" y="39" width="178" height="10" fill="#bcd6ea"/>
+  <circle cx="617" cy="44" r="3.5" fill="#b3543f"/>
+  <text x="617" y="33" font-size="9" fill="#666" text-anchor="middle">デビュー 2024</text>
+  <text x="258" y="33" font-size="9" fill="#666" text-anchor="middle">しまう</text>
+  <!-- 布団: thickening dates scatter Oct-Feb -->
+  <rect x="546" y="65" width="154" height="10" fill="#eeeeee"/>
+  <rect x="80" y="65" width="100" height="10" fill="#eeeeee"/>
+  <circle cx="690" cy="70" r="3.5" fill="#b3543f"/>
+  <circle cx="153" cy="70" r="3.5" fill="#b3543f"/>
+  <circle cx="613" cy="70" r="3.5" fill="#b3543f"/>
+  <text x="690" y="59" font-size="9" fill="#666" text-anchor="middle">2023</text>
+  <text x="153" y="59" font-size="9" fill="#666" text-anchor="middle">2025</text>
+  <text x="613" y="59" font-size="9" fill="#666" text-anchor="middle">2026</text>
+  <!-- 足温器: comes out Nov 15-26 -->
+  <rect x="622" y="91" width="19" height="10" fill="#f5cf9f"/>
+  <circle cx="629" cy="96" r="3.5" fill="#b3543f"/>
+  <text x="660" y="100" font-size="9" fill="#666">出す 11/15–26</text>
+  <!-- 暖房: starts Oct 20 (2020, 2025) / Oct 30 (2026) -->
+  <circle cx="578" cy="122" r="3.5" fill="#b3543f"/>
+  <circle cx="595" cy="122" r="3.5" fill="#b3543f"/>
+  <text x="578" y="111" font-size="9" fill="#666" text-anchor="middle">2020・2025</text>
+  <text x="612" y="111" font-size="9" fill="#666">2026</text>
+  <!-- 衣替え: 2025 Oct 13-14 -->
+  <circle cx="565" cy="148" r="3.5" fill="#b3543f"/>
+  <text x="565" y="137" font-size="9" fill="#666" text-anchor="middle">2025</text>
+  <!-- 冷房: starts mid-June -->
+  <rect x="339" y="169" width="52" height="10" fill="#d8ecdf"/>
+  <circle cx="362" cy="174" r="3.5" fill="#b3543f"/>
+  <text x="362" y="163" font-size="9" fill="#666" text-anchor="middle">2024</text>
+  <!-- 体: Sep hanamizu, Oct kaze, Nov nodo, Apr nodo -->
+  <rect x="494" y="195" width="50" height="10" fill="#f2c9c4"/>
+  <rect x="546" y="195" width="51" height="10" fill="#e89a90"/>
+  <rect x="599" y="195" width="49" height="10" fill="#f2c9c4"/>
+  <rect x="235" y="195" width="49" height="10" fill="#f2c9c4"/>
+  <g font-size="9" fill="#7a463c" text-anchor="middle">
+    <text x="519" y="203">鼻水</text>
+    <text x="571" y="203">風邪</text>
+    <text x="623" y="203">喉</text>
+    <text x="259" y="203">喉</text>
+  </g>
+</svg>
