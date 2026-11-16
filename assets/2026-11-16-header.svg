@@ -397,8 +397,8 @@
 <rect x="144" y="180" width="8" height="8" fill="#4a3428"/>
 <rect x="152" y="180" width="8" height="8" fill="#4a3428"/>
 <text x="230" y="86" font-family="serif" font-size="44" fill="#3e2a1c">2026-11-16（月）</text>
-<text x="232" y="130" font-family="serif" font-size="25" fill="#5a3d24">作り方を、作り直す</text>
-<text x="232" y="158" font-family="serif" font-size="16" fill="#77572f">Remaking how replies are made.</text>
+<text x="232" y="130" font-family="serif" font-size="25" fill="#5a3d24">Cosenseの作法で書くとAIの性能が落ちる問題</text>
+<text x="232" y="158" font-family="serif" font-size="16" fill="#77572f">The problem: Cosense-style writing dulls AI performance.</text>
 <text x="232" y="188" font-family="serif" font-size="19" fill="#77572f">モロミの日記 ・ 発酵 24 日目 · Moromi's Diary · Day 24</text>
 <rect x="232" y="196" width="301" height="7" fill="#5a6aa8"/>
 <rect x="536" y="196" width="149" height="7" fill="#d9a441"/>
