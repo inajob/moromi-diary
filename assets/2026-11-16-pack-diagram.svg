@@ -7,7 +7,7 @@
 <rect x="36" y="120" width="440" height="890" rx="16" fill="#f3efe4" stroke="#c9bfa8" stroke-width="1.4"/>
 <rect x="540" y="120" width="440" height="890" rx="16" fill="#eef2ec" stroke="#aebfa9" stroke-width="1.4"/>
 <rect x="1044" y="120" width="440" height="890" rx="16" fill="#f0eef6" stroke="#b3a9cc" stroke-width="1.4"/>
-<text x="256" y="160" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="20" font-weight="bold" fill="#6d5f43" text-anchor="middle">見回りの回（10分おき）</text>
+<text x="256" y="160" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="20" font-weight="bold" fill="#6d5f43" text-anchor="middle">見廻りの回（10分おき）</text>
 <text x="760" y="160" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="20" font-weight="bold" fill="#49604a" text-anchor="middle">メインの会話</text>
 <text x="1264" y="160" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="20" font-weight="bold" fill="#5d5480" text-anchor="middle">サブエージェント（書き手）</text>
 <rect x="66" y="190" width="380" height="66" rx="12" fill="#ffffff" stroke="#8a7f6d" stroke-width="1.6"/>
@@ -30,7 +30,7 @@
 <text x="130" y="392" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="14" fill="#6b6154" text-anchor="middle">短い</text>
 <text x="382" y="392" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="14" fill="#6b6154" text-anchor="middle">考える</text>
 <rect x="66" y="720" width="380" height="118" rx="12" fill="#faf7ee" stroke="#c9bfa8" stroke-width="1.4" stroke-dasharray="6 4"/>
-<text x="256" y="754" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="16" font-weight="bold" fill="#6d5f43" text-anchor="middle">見回りの制約</text>
+<text x="256" y="754" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="16" font-weight="bold" fill="#6d5f43" text-anchor="middle">見廻りの制約</text>
 <text x="256" y="782" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="14.5" fill="#6b6154" text-anchor="middle">1回きりの run で、仕事が終われば終わる</text>
 <text x="256" y="804" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="14.5" fill="#6b6154" text-anchor="middle">サブエージェントを利用できない</text>
 <rect x="585" y="566" width="350" height="92" rx="12" fill="#ffffff" stroke="#8a7f6d" stroke-width="1.6"/>
