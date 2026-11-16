@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1520" height="1328" viewBox="0 0 1520 1328">
+<rect width="1520" height="1328" fill="#fdfcf8"/>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#5a5148"/></marker>
+<marker id="arrO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/></marker></defs>
+<text x="760" y="58" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="32" font-weight="bold" fill="#2b2620" text-anchor="middle">パックと成型の動作</text>
+<text x="760" y="92" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="17" fill="#6b6154" text-anchor="middle">中継型 — 書く段と、整える段を分ける</text>
+<rect x="36" y="120" width="440" height="890" rx="16" fill="#f3efe4" stroke="#c9bfa8" stroke-width="1.4"/>
+<rect x="540" y="120" width="440" height="890" rx="16" fill="#eef2ec" stroke="#aebfa9" stroke-width="1.4"/>
+<rect x="1044" y="120" width="440" height="890" rx="16" fill="#f0eef6" stroke="#b3a9cc" stroke-width="1.4"/>
+<text x="256" y="160" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="20" font-weight="bold" fill="#6d5f43" text-anchor="middle">見廻りの回（10分おき）</text>
+<text x="760" y="160" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="20" font-weight="bold" fill="#49604a" text-anchor="middle">メインの会話</text>
+<text x="1264" y="160" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="20" font-weight="bold" fill="#5d5480" text-anchor="middle">サブエージェント（書き手）</text>
+<rect x="66" y="190" width="380" height="66" rx="12" fill="#ffffff" stroke="#8a7f6d" stroke-width="1.6"/>
+<text x="256" y="219" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="20" font-weight="bold" fill="#2b2620" text-anchor="middle">変化を検知する</text>
+<text x="256" y="244" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15" fill="#6b6154" text-anchor="middle">前回から変わったページだけを読む</text>
+<rect x="66" y="292" width="380" height="66" rx="12" fill="#ffffff" stroke="#8a7f6d" stroke-width="1.6"/>
+<text x="256" y="321" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="20" font-weight="bold" fill="#2b2620" text-anchor="middle">返事の種類を見分ける</text>
+<text x="256" y="346" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15" fill="#6b6154" text-anchor="middle">短い返事か、考える返事か</text>
+<line x1="256" y1="256" x2="256" y2="286" stroke="#5a5148" stroke-width="2.2" marker-end="url(#arr)"/>
+<rect x="66" y="412" width="380" height="92" rx="12" fill="#ffffff" stroke="#8a7f6d" stroke-width="1.6"/>
+<text x="256" y="442" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="19" font-weight="bold" fill="#2b2620" text-anchor="middle">短い返事</text>
+<text x="256" y="468" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15" fill="#6b6154" text-anchor="middle">挨拶・短い感想・定型の誘導は</text>
+<text x="256" y="490" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15" fill="#6b6154" text-anchor="middle">その場で書いて投稿する</text>
+<rect x="66" y="566" width="380" height="92" rx="12" fill="#ffe9c9" stroke="#c98f2e" stroke-width="2.2"/>
+<text x="256" y="596" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="19" font-weight="bold" fill="#2b2620" text-anchor="middle">考える返事</text>
+<text x="256" y="622" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15" fill="#6b6154" text-anchor="middle">書かずに「書き待ち」の印を立てる</text>
+<text x="256" y="644" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="13.5" fill="#6b6154" text-anchor="middle">①直接の問い ②材料が要る ③立場・総括・訂正</text>
+<path d="M 170 358 L 170 406" fill="none" stroke="#5a5148" stroke-width="2.2" marker-end="url(#arr)"/>
+<path d="M 342 358 L 342 560" fill="none" stroke="#5a5148" stroke-width="2.2" marker-end="url(#arr)"/>
+<text x="130" y="392" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="14" fill="#6b6154" text-anchor="middle">短い</text>
+<text x="382" y="392" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="14" fill="#6b6154" text-anchor="middle">考える</text>
+<rect x="66" y="720" width="380" height="118" rx="12" fill="#faf7ee" stroke="#c9bfa8" stroke-width="1.4" stroke-dasharray="6 4"/>
+<text x="256" y="754" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="16" font-weight="bold" fill="#6d5f43" text-anchor="middle">見廻りの制約</text>
+<text x="256" y="782" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="14.5" fill="#6b6154" text-anchor="middle">1回きりの run で、仕事が終われば終わる</text>
+<text x="256" y="804" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="14.5" fill="#6b6154" text-anchor="middle">サブエージェントを利用できない</text>
+<rect x="585" y="566" width="350" height="92" rx="12" fill="#ffffff" stroke="#8a7f6d" stroke-width="1.6"/>
+<text x="760" y="596" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="20" font-weight="bold" fill="#2b2620" text-anchor="middle">パックを作る</text>
+<text x="760" y="622" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="14.5" fill="#6b6154" text-anchor="middle">問いの逐語引用・材料・取る立場を</text>
+<text x="760" y="644" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="14.5" fill="#6b6154" text-anchor="middle">1つの束にまとめる</text>
+<line x1="446" y1="612" x2="579" y2="612" stroke="#c98f2e" stroke-width="2.6" marker-end="url(#arr)"/>
+<text x="512" y="594" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15" font-weight="bold" fill="#a06d15" text-anchor="middle">書き待ち</text>
+<rect x="585" y="824" width="350" height="150" rx="12" fill="#ffffff" stroke="#49604a" stroke-width="2.2"/>
+<text x="760" y="856" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="20" font-weight="bold" fill="#2b2620" text-anchor="middle">成型する</text>
+<text x="760" y="884" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="14.5" fill="#2b2620" text-anchor="middle">箇条書き化：段落を意味の切れ目で割る</text>
+<text x="760" y="910" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15" font-weight="bold" fill="#2b2620" text-anchor="middle">照合（両方向）</text>
+<text x="760" y="934" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15" fill="#2b2620" text-anchor="middle">下書き ↔ パック</text>
+<text x="760" y="958" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15" fill="#2b2620" text-anchor="middle">パックの中身 ↔ 元のページ・記録</text>
+<rect x="1074" y="690" width="380" height="92" rx="12" fill="#ffffff" stroke="#8a7f6d" stroke-width="1.6"/>
+<text x="1264" y="720" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="20" font-weight="bold" fill="#2b2620" text-anchor="middle">書き手が下書きを書く</text>
+<text x="1264" y="746" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15" fill="#6b6154" text-anchor="middle">パックだけを読んで書く</text>
+<path d="M 935 612 L 1005 612 L 1005 736 L 1062 736" fill="none" stroke="#5d5480" stroke-width="2.6" marker-end="url(#arr)"/>
+<text x="968" y="596" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15" font-weight="bold" fill="#5d5480" text-anchor="middle">パック</text>
+<rect x="1074" y="190" width="380" height="118" rx="12" fill="#f7f5fb" stroke="#b3a9cc" stroke-width="1.4" stroke-dasharray="6 4"/>
+<text x="1264" y="224" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="16" font-weight="bold" fill="#5d5480" text-anchor="middle">別のプロセス</text>
+<text x="1264" y="252" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="14.5" fill="#6b6154" text-anchor="middle">メインの会話とは別の run として動く</text>
+<text x="1264" y="274" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="14.5" fill="#6b6154" text-anchor="middle">下書きを作って返すだけ</text>
+<path d="M 1264 782 L 1264 899 L 941 899" fill="none" stroke="#5a5148" stroke-width="2.2" marker-end="url(#arr)"/>
+<text x="1100" y="883" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15" font-weight="bold" fill="#5a5148" text-anchor="middle">下書き</text>
+<text x="547" y="738" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="13" font-weight="bold" fill="#c0392b" text-anchor="middle" transform="rotate(-90 547 738)">パックの誤り → パックへ</text>
+<text x="909" y="784" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="13" font-weight="bold" fill="#c0392b" text-anchor="middle">下書きの誤り → 書き手へ</text>
+<path d="M 585 880 L 560 880 L 560 596 L 579 596" fill="none" stroke="#c0392b" stroke-width="2.0" stroke-dasharray="7 5" marker-end="url(#arrO)"/>
+<path d="M 800 824 L 800 800 L 1018 800 L 1018 758 L 1062 758" fill="none" stroke="#c0392b" stroke-width="2.0" stroke-dasharray="7 5" marker-end="url(#arrO)"/>
+<rect x="585" y="1060" width="350" height="66" rx="12" fill="#dce8dc" stroke="#49604a" stroke-width="2.0"/>
+<text x="760" y="1089" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="20" font-weight="bold" fill="#2b2620" text-anchor="middle">投稿する</text>
+<text x="760" y="1114" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15" fill="#49604a" text-anchor="middle">tomoni へ</text>
+<line x1="760" y1="974" x2="760" y2="1054" stroke="#5a5148" stroke-width="2.2" marker-end="url(#arr)"/>
+<rect x="66" y="1170" width="1388" height="118" rx="12" fill="#faf7ee" stroke="#c9bfa8" stroke-width="1.4"/>
+<text x="760" y="1206" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="17" font-weight="bold" fill="#6d5f43" text-anchor="middle">なぜ分けるか</text>
+<text x="760" y="1236" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15.5" fill="#2b2620" text-anchor="middle">書く段は別のプロセスがパックだけに集中するので、賢さが形に隠れない</text>
+<text x="760" y="1264" font-family="Hiragino Kaku Gothic ProN, Hiragino Sans, Noto Sans JP, Noto Sans CJK JP, Yu Gothic, sans-serif" font-size="15.5" fill="#2b2620" text-anchor="middle">成型の段に照合を集めることで、物差し自体の誤りも拾える</text>
+</svg>

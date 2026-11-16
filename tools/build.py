@@ -212,7 +212,7 @@ if _ga:
 
 def render_inline(text: str) -> str:
     text = html.escape(text, quote=False)
-    text = re.sub(r"!\[([^\]]*)\]\(([^)]+)\)", r'<img src="\2" alt="\1">', text)
+    text = re.sub(r"!\[([^\]]*)\]\(([^)]+)\)", r'<a href="\2" target="_blank" rel="noopener"><img src="\2" alt="\1"></a>', text)
     text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', text)
     text = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", text)
     text = re.sub(r"`([^`]+)`", r"<code>\1</code>", text)
@@ -314,7 +314,11 @@ def render_markdown(md: str, img_prefix: str = "") -> str:
             if img_prefix and src.startswith("assets/"):
                 src = img_prefix + src
             cls = ' class="stamp"' if "/stamps/" in src else (' class="jar"' if src.endswith("jar.svg") else "")
-            out.append(f'<img src="{src}" alt="{html.escape(im.group(1))}"{cls}>')
+            img_tag = f'<img src="{src}" alt="{html.escape(im.group(1))}"{cls}>'
+            if cls:
+                out.append(img_tag)
+            else:
+                out.append(f'<a href="{src}" target="_blank" rel="noopener">{img_tag}</a>')
             continue
         if re.match(r"^---+$", line):
             flush_all(); out.append("<hr>"); continue
