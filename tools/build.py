@@ -235,6 +235,7 @@ def render_markdown(md: str, img_prefix: str = "") -> str:
 
     quote, quote_open = [], []
     fence = None
+    rawblock = None
     quote_speaker = [None]
 
     # 会話の引用は、先頭に <!-- speaker: 名前 --> と置くと話者アイコン付きになる。
@@ -289,6 +290,15 @@ def render_markdown(md: str, img_prefix: str = "") -> str:
             continue
         if line.startswith("```"):
             flush_all(); fence = []
+            continue
+        if rawblock is not None:
+            if line.strip() == "<!-- /raw -->":
+                out.append("\n".join(rawblock)); rawblock = None
+            else:
+                rawblock.append(raw)
+            continue
+        if line.strip() == "<!-- raw -->":
+            flush_all(); rawblock = []
             continue
         if line.startswith("<!--"):
             continue
